@@ -1,0 +1,10 @@
+Hylafax and AvantFax settings;
+prefix = XXXX;
+html2ps = html2ps;
+tmp = /tmp;
+hylafax = faxcover;
+Database settings;
+database = avantfax;
+password = d58fe49;
+username = avantfax;
+host = localhost;
