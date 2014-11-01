@@ -124,6 +124,7 @@
 			<Option target="libh2fax_Debug_Dynamic" />
 			<Option target="test" />
 		</Unit>
+		<Unit filename="config.h" />
 		<Unit filename="conversion.cpp">
 			<Option target="libh2fax_Debug" />
 			<Option target="libh2fax_Release" />
