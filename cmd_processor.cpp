@@ -1,21 +1,37 @@
+/*
+    Copyright (C) 2014 Luis M. Santos
+    Contact: luismigue1234@hotmail.com
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with This program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include <getopt.h>
 #include "cmd_processor.h"
 #include "conversion.h"
 
 
-h2fax::cstr SWITCHES = "c:C:d:E:f:H:l:L:M:n:N:p:P:r:s:t:u:U:v:V:x:X:";
+h2fax::cstr SWITCHES = "c:C:d:E:f:H:l:L:M:n:N:p:P:r:s:t:u:U:v:V:x:X:\0";
 
 h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char switches[])
 {
     char o = 0;
     faxcover_args args;
 
+    args.appName = argv[0];
+
     if(argc == 1)
     {
-        args.appName = argv[0];
-	std::cout << "Error: The program was invoked with no arguments!"
+	std::cerr << "Error: The program was invoked with no arguments!"
 		<< std::endl;
 	args.argNum = 1;
         return args;
@@ -97,7 +113,7 @@ h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char swi
         /*Default cases*/
         case '?':
         default:
-            std::cout << "Invalid parameters! Read on faxcover usage! "
+            std::cerr << "Invalid parameters! Read on faxcover usage! "
                 << "http://hylafax.sourceforge.net/man/faxcover.php"
                 << std::endl;
         }
@@ -208,3 +224,5 @@ h2fax::cstr h2fax::getDefaultSwitches()
 {
     return SWITCHES;
 }
+
+

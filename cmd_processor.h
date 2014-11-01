@@ -1,3 +1,20 @@
+/*
+    Copyright (C) 2014 Luis M. Santos
+    Contact: luismigue1234@hotmail.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with This program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #ifndef CMD_PROCESSOR_H_INCLUDED
 #define CMD_PROCESSOR_H_INCLUDED
 
@@ -71,6 +88,11 @@ namespace h2fax
         cstr operator[](cstr arg);
         uint hashFunction(cstr arg);
     };
+
+    /*Because AvantFax can send us an argument string with empty options when options are expected (-u -P), I made this
+    class to set those empty args to "" instead of NULL. Doing so will prevent malfunctioning of the program!
+    */
+
 
     cstr getDefaultSwitches();
     faxcover_args getParameters(int argc, char* argv[], const char switches[] = getDefaultSwitches());

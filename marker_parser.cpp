@@ -11,7 +11,7 @@ void h2fax::removeAvantFaxPrefix(cstr filepath, const std::string& prefix)
     char c;
     //Open and read file contents
     in = fopen(filepath, "r");
-    if (in == NULL) perror ("Error opening file");
+    if (in == NULL) std::cerr << "Error opening file.1" << std::endl;
     else
     {
       c = fgetc(in);
@@ -26,14 +26,14 @@ void h2fax::removeAvantFaxPrefix(cstr filepath, const std::string& prefix)
     tmp = replaceStrInStr(tmp, prefix, "");
     //Output the new contents to the same file
     out = fopen(filepath, "w");
-    if (out == NULL) perror ("Error opening file");
+    if (out == NULL) std::cerr << "Error opening file.2" << std::endl;
     else
     {
       for(size_t i = 0; i < tmp.size(); i++)
       {
         if(fputc(tmp[i], out) == EOF)
         {
-          std::cout << "Error writing file!" << std::endl;
+          std::cerr << "Error writing file!" << std::endl;
           break;
         } 
       }  
@@ -88,7 +88,7 @@ void h2fax::substituteMarkers(cstr filepath, faxcover_args& data)
     char c;
     //Open and read file contents
     in = fopen(filepath, "r");
-    if (in == NULL) perror ("Error opening file");
+    if (in == NULL) std::cerr << "Error opening file.3" << std::endl;
     else
     {
       c = fgetc(in);
@@ -104,17 +104,16 @@ void h2fax::substituteMarkers(cstr filepath, faxcover_args& data)
     {
         tmp = replaceStrInStr(tmp, MARKERS[i], data[MARKERS[i].c_str()], false);
     }
-    
     //Output the new contents to the same file
     out = fopen(filepath, "w");
-    if (out == NULL) perror ("Error opening file");
+    if (out == NULL) std::cerr << "Error opening file.4" << std::endl;
     else
     {
       for(size_t i = 0; i < tmp.size(); i++)
       {
         if(fputc(tmp[i], out) == EOF)
         {
-          std::cout << "Error writing file!" << std::endl;
+          std::cerr << "Error writing file!" << std::endl;
           break;
         } 
       }  
