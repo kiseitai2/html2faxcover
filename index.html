@@ -27,9 +27,9 @@
         </ul>
       </header>
       <section>
-        <p>Introduction:<br>
+        <p><b>Introduction:</b><br>
     This project came about when I tried setting up a fax server at my aunt's business. Unfortunately, AvantFax's faxcover.php was having trouble creating a database object and connecting to the database. AvantFax connects to the MySQL database in order to obtain the name and e-mail of the sending user and putting it in the coversheet automatically. I decided that I could have a better control over the problem if I created a C++ program that would connect to this database directly. I decided to call the program html2faxcover, because I want this program to be a replacement for AvantFax's or any other fax server system's html to coversheet conversion utility. Currently, this program is not a completely standalone utility. <br> <br></p>
-Installation:<br>
+<b>Installation:</b><br>
  To install this utility program, download the source code. Open up the Makefile and
 review the first couple of lines. Make changes to these lines if you think they are 
 appropriate. Open up settings and make sure its information is accurate. Save both 
@@ -45,8 +45,7 @@ add the -E # execution flag info to tell html2faxcover what execution mode to ru
 Read below about the usage parameters. 
  Send a test fax using your html coversheet of choice and confirm that the system
 works as intended.<br>
-
-Usage:<br>
+<b>Usage:</b><br>
  This program accepts all of the options sent by AvantFax and used by HylaFax's 
 faxcover. However, since the program connects to your MySQL database of choice,
 I supplied a couple of extra command line options!<br>
@@ -68,10 +67,10 @@ I supplied a couple of extra command line options!<br>
     line options. 2 = the file is a ps coversheet that only needs the AvantFax 
 	prefixes removed and passed to HylaFax.<br>
 
-<p>Requirements:<br>
+<p><b>Requirements:</b><br>
    This program requires that html2ps or a similar utility is available in your system.<br>
    
-Status:<br>
+<b>Status:</b><br>
   The program works offline, but I have to fix an issue when using AvantFax's interface, which is through a browser and considered outside access to the server (thus there's some permission restrictions).<br></p>
       </section>
     </div>
