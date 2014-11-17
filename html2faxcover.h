@@ -24,6 +24,12 @@
 #include "typedefs.h"
 #include "default.h"
 #include "mysql.h"
+#include "faxfunctions.h"
+
+#define PROG_NAME = html2faxcover
+#define PROG_VERSION = "1.1/a"
+
+#define PATH_SLASH "/"
 
 
 #endif // HTML2FAXCOVER_H_INCLUDED

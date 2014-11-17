@@ -67,6 +67,7 @@ char capitalizeChar(const char character);
 char lowerCaseChar(const char character);
 std::string scientificFormat(const std::string& num, size_t precision = 3);
 std::string scientificFormat(float num, size_t precision = 3);
+bool isNum(std::string& strNum);
 
 #ifdef UTF8_NEEDED
 //UTF based conversion functions. They rely on the library utfcpp!

@@ -225,4 +225,29 @@ h2fax::cstr h2fax::getDefaultSwitches()
     return SWITCHES;
 }
 
-
+void h2fax::getRecvdFaxParameters(int argc, char* argv[], h2fax::faxrecvd_args& args)
+{
+    for(int i = 0; i < argc; i++)
+    {
+        switch(i)
+        {
+        case 0:
+            args.appName = argv[i];
+            break;
+        case 1:
+            args.tiff_file = argv[i];
+            break;
+        case 2:
+            args.modemdev = argv[i];
+            break;
+        case 3:
+            args.commID = argv[i];
+            break;
+        case 4:
+            args.errormsg = argv[i];
+            break;
+        default:
+            std::cerr << "Error: More parameters were passed to the program than expected!" << std::endl;
+        }
+    }
+}

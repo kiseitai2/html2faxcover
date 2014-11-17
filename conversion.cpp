@@ -507,6 +507,27 @@ std::string replaceCharInStr(std::string source, char target, char replacement, 
     return source;
 }
 
+bool isNum(std::string& strNum)
+{
+    std::string nums = "0123456789e-+.^";
+    char c;
+    size_t correctCount = 0;
+    for(size_t i = 0; i < strNum.size(); i++)
+    {
+        c = strNum[i];
+        for(size_t j = 0; j < nums.size(); j++)
+        {
+            if(strNum[i] == nums[j])
+            {
+                correctCount++;
+                break;
+            }
+        }
+    }
+
+    return correctCount == strNum.size();
+}
+
 #ifdef UTF8_NEEDED
 bool checkUTF8String(const std::string& buffer)
 {

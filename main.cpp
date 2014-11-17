@@ -26,7 +26,6 @@ enum Modes
 };
 
 #define TMP_HTML "tmp.html"
-#define PATH_SLASH "/"
 
 //Prototypes
 void getNameAndEmail(MySQL& db, std::string criteria, std::string& name, std::string& email);

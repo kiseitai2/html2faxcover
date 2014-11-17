@@ -27,6 +27,11 @@
 #include "sqlkeywords.h"
 
 
+#define SQL_COMA ","
+#define SQL_NULL "NULL"
+#define SQL_ZERO "0"
+#define SQL_NONE "None"
+
 class MySQL : public SQLGenerator
 {
 public:
@@ -41,6 +46,8 @@ public:
     void disconnect();
     void queryDB(const std::string& query);
     void CleanResults();
+    bool hasResults();
+    size_t rowCount();
     /*Results getters*/
     void getResult(int& response, const std::string& col_name);
     void getResult(char& response, const std::string& col_name);

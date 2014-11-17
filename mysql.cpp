@@ -106,6 +106,16 @@ void MySQL::CleanResults()
     }
 }
 
+bool MySQL::hasResults()
+{
+    return res->rowsCount();
+}
+
+size_t MySQL::rowCount()
+{
+    return res->rowsCount();
+}
+
 void MySQL::error_log(sql::SQLException& err)
 {
     std::cerr << "# ERR: SQLException in " << __FILE__;

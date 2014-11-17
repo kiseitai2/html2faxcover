@@ -31,8 +31,9 @@ works as intended.
 
 Usage:
  This program accepts all of the options sent by AvantFax and used by HylaFax's 
-faxcover. However, since the program connects to your MySQL database of choice,
-I supplied a couple of extra command line options!
+faxcover (see http://linux.die.net/man/1/faxcover). However, since the program 
+connects to your MySQL database of choice, I supplied a couple of extra command 
+line options!
  -u Allows you to specify the username for the database.
  -U Allows you to specify the engine to be used. It will be removed in future releases
     unless I add support for other database types (sqlite, MariaDB, etc).

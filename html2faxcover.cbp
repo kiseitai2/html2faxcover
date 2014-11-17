@@ -98,6 +98,20 @@
 					<Add option="-g" />
 				</Compiler>
 			</Target>
+			<Target title="faxrcvd">
+				<Option output="faxrcvd" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="html2faxcover_dll" />
+					<Add directory="bin/Debug" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -124,7 +138,15 @@
 			<Option target="libh2fax_Debug_Dynamic" />
 			<Option target="test" />
 		</Unit>
-		<Unit filename="config.h" />
+		<Unit filename="config.h">
+			<Option target="Debug" />
+			<Option target="Release" />
+			<Option target="test" />
+			<Option target="libh2fax_Debug" />
+			<Option target="libh2fax_Release" />
+			<Option target="libh2fax_Release_Dynamic" />
+			<Option target="libh2fax_Debug_Dynamic" />
+		</Unit>
 		<Unit filename="conversion.cpp">
 			<Option target="libh2fax_Debug" />
 			<Option target="libh2fax_Release" />
@@ -159,6 +181,21 @@
 			<Option target="libh2fax_Release_Dynamic" />
 			<Option target="libh2fax_Debug_Dynamic" />
 			<Option target="test" />
+		</Unit>
+		<Unit filename="faxfunctions.cpp">
+			<Option target="libh2fax_Debug" />
+			<Option target="libh2fax_Release" />
+			<Option target="libh2fax_Release_Dynamic" />
+			<Option target="libh2fax_Debug_Dynamic" />
+		</Unit>
+		<Unit filename="faxfunctions.h">
+			<Option target="libh2fax_Debug" />
+			<Option target="libh2fax_Release" />
+			<Option target="libh2fax_Release_Dynamic" />
+			<Option target="libh2fax_Debug_Dynamic" />
+		</Unit>
+		<Unit filename="faxrecvd.cpp">
+			<Option target="faxrcvd" />
 		</Unit>
 		<Unit filename="html2faxcover.h">
 			<Option target="libh2fax_Debug" />

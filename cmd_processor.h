@@ -30,7 +30,7 @@
 namespace h2fax
 {
 
-    struct faxcover_args
+    typedef struct h2fax_args
     {
         cstr appName;//file path + this application's name
         cstr from;//sending person
@@ -48,10 +48,17 @@ namespace h2fax
         cstr template_path;//path to fax cover sheet
         cstr email;//email of sender
         cstr pageCount;//Number of pages in the fax job
+        cstr tiff_file;//Location of received tiff fax file
+        cstr modemdev;//Modem device on which the fax was received
+        cstr commID;//Communication identifier for incoming call
+        cstr errormsg;//Error message if a problem ocurred during the receive operation
+        cstr CIDNumber;
+        cstr CIDName;
+        cstr DIDNum;
         std::string date;//Today's date
         cstr pageSize;
         cstr username, password, database, engine, host; //Database connection information
-	std::string Username, Password, Database, Engine, Host;
+        std::string Username, Password, Database, Engine, Host;
         cstr execMode; //Variable that will hold the execution mode flag.
 	size_t argNum;
 
@@ -75,6 +82,14 @@ namespace h2fax
             pageCount = NULL;//Number of pages in the fax job
             pageSize = NULL;//Size of the page
             date = "";//Today's date
+            /*Faxrecvd parameters!*/
+            tiff_file = NULL;
+            modemdev = NULL;
+            commID = NULL;
+            errormsg = NULL;
+            CIDNumber = NULL;
+            CIDName = NULL;
+            DIDNum = NULL;
             /*Database connection info*/
             engine = NULL;
             username = NULL;
@@ -87,7 +102,8 @@ namespace h2fax
         }
         cstr operator[](cstr arg);
         uint hashFunction(cstr arg);
-    };
+    } faxcover_args, faxrecvd_args;
+
 
     /*Because AvantFax can send us an argument string with empty options when options are expected (-u -P), I made this
     class to set those empty args to "" instead of NULL. Doing so will prevent malfunctioning of the program!
@@ -95,7 +111,8 @@ namespace h2fax
 
 
     cstr getDefaultSwitches();
-    faxcover_args getParameters(int argc, char* argv[], const char switches[] = getDefaultSwitches());
+    faxcover_args getFaxcoverParameters(int argc, char* argv[], const char switches[] = getDefaultSwitches());
+    void getRecvdFaxParameters(int argc, char* argv[], faxrecvd_args& args);
 }
 
 
