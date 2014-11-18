@@ -22,7 +22,7 @@
 
 h2fax::cstr SWITCHES = "c:C:d:E:f:H:l:L:M:n:N:p:P:r:s:t:u:U:v:V:x:X:\0";
 
-h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char switches[])
+h2fax::faxcover_args h2fax::getFaxcoverParameters(int argc, char* argv[], const char switches[])
 {
     char o = 0;
     faxcover_args args;

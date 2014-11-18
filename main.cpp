@@ -34,7 +34,7 @@ std::string generateCommand(const h2fax::faxcover_args& args);
 int main(int argc, char* argv[])
 {
     //Grab command line arguments in a nicely packaged structure!
-    h2fax::faxcover_args args = h2fax::getParameters(argc, argv);
+    h2fax::faxcover_args args = h2fax::getFaxcoverParameters(argc, argv);
     h2fax::uint execMode;
     std::string root_prog_path = std::string(args.appName).substr(0, std::string(args.appName).rfind("/")) + PATH_SLASH;
     //data_base settings((root_prog_path + "settings").c_str());//Works when php scripts call the prog directly but not when the script calls a program that calls this program. Use the method below!

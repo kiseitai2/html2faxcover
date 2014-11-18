@@ -507,6 +507,25 @@ std::string replaceCharInStr(std::string source, char target, char replacement, 
     return source;
 }
 
+std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances)
+{
+   size_t pos = 0;
+   if(allInstances)//Replace all instances of target
+   {
+      pos = source.find(target, pos);
+      while(pos != std::string::npos || pos > source.size())
+      {
+         source.replace(source.find(target), target.size(), replacement);
+	 pos = source.find(target, pos);
+      }
+   }
+   else //Replace the first instance of target
+   {
+      source.replace(source.find(target), target.size(), replacement);
+   }
+
+   return source;
+}
 bool isNum(std::string& strNum)
 {
     std::string nums = "0123456789e-+.^";

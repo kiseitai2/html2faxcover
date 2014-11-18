@@ -1,4 +1,5 @@
 #include "marker_parser.h"
+#include "conversion.h"
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
@@ -133,3 +134,6 @@ std::string h2fax::getDate()
   //buf = asctime(tstruct);
   return buf;
 }
+
+void h2fax::exec_cmd(cstr filepath, const std::string& cmd, const std::string& options)
+    {convertToPS(filepath, cmd, options);}

@@ -33,16 +33,6 @@ namespace h2fax
         void extractTime();
     } fax;
 
-    class FaxModem
-    {
-    public:
-        FaxModem(MySQL& db);
-    }
-
-    //Vars
-    static char CALLIDn_CIDNumber;
-    static char CALLIDn_CIDName;
-    static char CALLIDn_DIDNum;
 
     //Functions
     fax faxinfo(const std::string& fileinfo_prog, const std::string& tiff_path);

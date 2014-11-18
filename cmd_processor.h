@@ -62,7 +62,7 @@ namespace h2fax
         cstr execMode; //Variable that will hold the execution mode flag.
 	size_t argNum;
 
-        faxcover_args()
+        h2fax_args()
         {
             appName = NULL;//file path + this application's name
             from = NULL;//sending person

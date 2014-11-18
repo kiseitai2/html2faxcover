@@ -1,8 +1,5 @@
 #include "marker_parser.h"
-#include "functions.h"
-char h2fax::CALLIDn_CIDNumber   = 1;
-char h2fax::CALLIDn_CIDName		= 1;
-char h2fax::CALLIDn_DIDNum		= 1;
+#include "faxfunctions.h"
 
 void h2fax::logMsg(const std::string& msg)
 {
@@ -21,7 +18,7 @@ h2fax::fax h2fax::faxinfo(const std::string& fileinfo_prog, const std::string& t
     //ask fileinfo to print the header data for the tiff fax file
     exec_cmd(tiff_path.c_str(), fileinfo_prog, "-n > " + tmpFile);
     //open the temporary file that contains the file info!
-    data_base file_inf(tmpFile);
+    data_base file_inf(tmpFile.c_str());
     buff = file_inf.GetStrBuffer();
     //Time to dissect the data from the file info
     while(index != std::string::npos)

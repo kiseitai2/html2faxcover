@@ -59,6 +59,7 @@ int numToInt(double value);
 std::string fuseStrs(std::string Str1, std::string Str2);
 std::string capitalizeStr(const std::string& source);
 std::string replaceCharInStr(std::string source, char target, char replacement, bool allInstances = true);
+std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances = true);
 char* getCharArrayFromConstArray(const std::string& s);
 double round(double value, int precision);
 int iround(double value, int precision);
@@ -68,6 +69,7 @@ char lowerCaseChar(const char character);
 std::string scientificFormat(const std::string& num, size_t precision = 3);
 std::string scientificFormat(float num, size_t precision = 3);
 bool isNum(std::string& strNum);
+
 
 #ifdef UTF8_NEEDED
 //UTF based conversion functions. They rely on the library utfcpp!
