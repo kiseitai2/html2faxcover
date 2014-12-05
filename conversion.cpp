@@ -68,21 +68,22 @@ int numToInt(double value)
     return int(value + extra);
 }
 
-const int searchCharIndex(char character, char buffer[]){
-  /*This function will search for a character and tell me where it exists in the buffer.*/
-for(unsigned int i =0; buffer[i] != '\0'; i++)
+const int searchCharIndex(char character, char buffer[])
 {
-    if(character == buffer[i])
+    /*This function will search for a character and tell me where it exists in the buffer.*/
+    for(unsigned int i =0; buffer[i] != '\0'; i++)
     {
-        return i;
+        if(character == buffer[i])
+        {
+            return i;
+        }
     }
-}
-return ERROR;
+    return ERROR;
 }
 
 const int searchCharIndex(const char character, std::string buffer, int start)
 {
-      /*This function will search for a character and tell me where it exists in the buffer.*/
+    /*This function will search for a character and tell me where it exists in the buffer.*/
     for(unsigned int i =start; i < buffer.length(); i++)
     {
         if(character == buffer[i])
@@ -93,16 +94,17 @@ const int searchCharIndex(const char character, std::string buffer, int start)
     return ERROR;
 }
 
-bool searchChar(const char character, std::string buffer){
-/*This function will search for a character and tell me if it exists.*/
-  for(unsigned int i =0; i < buffer.size() -1; i++)
+bool searchChar(const char character, std::string buffer)
 {
-    if(character == buffer[i])
+    /*This function will search for a character and tell me if it exists.*/
+    for(unsigned int i =0; i < buffer.size() -1; i++)
     {
-        return true;
+        if(character == buffer[i])
+        {
+            return true;
+        }
     }
-}
-return false;
+    return false;
 }
 
 int findString(const char target[], const char stringSource[], int pos)
@@ -194,7 +196,7 @@ std::string sliceStr(std::string input, int start, int end)
 {
     if(input == "")
     {
-      return "";
+        return "";
     }
     /*This function takes a string and returns a slice from the start position to the desired end position*/
     char answer[end - start + 1];
@@ -275,22 +277,22 @@ bool changeProgramWorkingDirectory(char* newPath)
 
 char capitalizeChar(const char character)
 {
-  /*This function takes a character and returns the upper case version. This
-   *conversion is based on the ASCII table. Because it uses the symmetry of the
-   *table, you can actually input other characters and receive not the upper case,
-   *but another character (example, [ -> ;). Warning: it shouldn't work with
-   *other character standards unless they share the same symmetry as the ASCII
-   *table.
-   **/
-  return character - ('a' - 'A');
+    /*This function takes a character and returns the upper case version. This
+     *conversion is based on the ASCII table. Because it uses the symmetry of the
+     *table, you can actually input other characters and receive not the upper case,
+     *but another character (example, [ -> ;). Warning: it shouldn't work with
+     *other character standards unless they share the same symmetry as the ASCII
+     *table.
+     **/
+    return character - ('a' - 'A');
 }
 
 char lowerCaseChar(const char character)
 {
-  /*This function takes a character and returns the lower case version. This
-   *conversion is based on the ASCII table.
-   **/
-  return character + ('a' - 'A');
+    /*This function takes a character and returns the lower case version. This
+     *conversion is based on the ASCII table.
+     **/
+    return character + ('a' - 'A');
 }
 
 std::string capitalizeStr(const std::string& source)
@@ -326,7 +328,7 @@ std::string scientificFormat(const std::string& num, size_t precision)
         return num;
     //Check wether index 0 is the negative sign or the actual start.
     if(num[start] == '-')
-            start++;
+        start++;
     //If the number is too small to begin with, return the unedited string!
     if(cStrToNum((num.c_str())) < 0 && dotLoc != std::string::npos)
         if(num.length() - 2 <= precision && num[0] != '0')
@@ -453,16 +455,16 @@ std::string scientificFormat(float num, size_t precision)
     /*if(numToStr(num).length() > precision)
     {
         //Create the scientific notation string*/
-        sprintf(buff, formatPrecision.c_str(), num);
-       /* //Grab the index of either - or + after e (in e+-00x)
-        if(searchCharIndex('-', buff, searchCharIndex('e', buff)) != ERROR)
-            exponentStart = searchCharIndex('-', buff, searchCharIndex('e', buff));
-        else if(searchCharIndex('+', buff, searchCharIndex('e', buff)) != ERROR)
-            exponentStart = searchCharIndex('+', buff, searchCharIndex('e', buff));
-        //Get rid of all leading zeroes
-        while(buff[exponentStart + 1] == '0')
-            shiftLeadingExponentZeroes(buff, exponentStart + 1);
-        return buff;
+    sprintf(buff, formatPrecision.c_str(), num);
+    /* //Grab the index of either - or + after e (in e+-00x)
+     if(searchCharIndex('-', buff, searchCharIndex('e', buff)) != ERROR)
+         exponentStart = searchCharIndex('-', buff, searchCharIndex('e', buff));
+     else if(searchCharIndex('+', buff, searchCharIndex('e', buff)) != ERROR)
+         exponentStart = searchCharIndex('+', buff, searchCharIndex('e', buff));
+     //Get rid of all leading zeroes
+     while(buff[exponentStart + 1] == '0')
+         shiftLeadingExponentZeroes(buff, exponentStart + 1);
+     return buff;
     }
     return numToStr(num);*/
     return buff;
@@ -505,6 +507,41 @@ std::string replaceCharInStr(std::string source, char target, char replacement, 
         source[i] = replacement;
     }
     return source;
+}
+
+std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances)
+{
+    size_t pos = 0;
+    pos = source.find(target, pos);//Look for the first instance of target
+    if(pos > source.size())//If we are at EOF, return the unmodified copy
+        return source;//The reason I didn't use npos in the if statement is because npos gets optimized out in Unix systems :(
+    if(allInstances)//Replace all instances of target
+    {
+        while(pos != std::string::npos || pos < source.size())
+        {
+            if(pos > source.size())//Redundant check in the first run. A safety check for all subsequent runs!
+                break;
+            source.replace(source.find(target), target.size(), replacement);
+            pos = source.find(target, pos);
+        }
+    }
+    else //Replace the first instance of target
+    {
+        source.replace(source.find(target), target.size(), replacement);
+    }
+
+    return source;
+}
+
+std::string removeLeadingWhiteSpace(const std::string& source)
+{
+    size_t start = 0;
+    while(source[start] == ' ')
+    {
+        start++;
+    }
+
+    return source.substr(start);
 }
 
 bool isNum(std::string& strNum)

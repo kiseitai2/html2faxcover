@@ -260,6 +260,7 @@
 			<Option target="libh2fax_Debug_Dynamic" />
 			<Option target="test" />
 		</Unit>
+		<Unit filename="version.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

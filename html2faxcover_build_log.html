@@ -4,13 +4,79 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
 <body>
 <tt>
-Build started on: <u>13-10-2014 at 21:14.18</u><br />
-Build ended on: <u>13-10-2014 at 21:14.18</u><p />
-<b>-------------- Build: Debug in html2faxcover (compiler: GNU GCC Compiler)---------------</b><br />
-mingw32-g++.exe -L..\..\..\..\..\..\boost_1_56_0\stage\lib -L..\..\..\..\..\cygwin\usr\local\lib -Lbin\Debug  -o bin\Debug\html2faxcover.exe obj\Debug\main.o    -lmysqlcppconn -lhtml2faxcover_dll<br />
-Output size is 1.10 MB<br />
-<font color="#0000ff">Process terminated with status 0 (0 minutes, 0 seconds)</font><br />
-<font color="#0000ff">0 errors, 0 warnings (0 minutes, 0 seconds)</font><br />
+Build started on: <u>05-12-2014 at 04:41.13</u><br />
+Build ended on: <u>05-12-2014 at 04:41.21</u><p />
+<b>-------------- Build: libh2fax_Debug in html2faxcover (compiler: GNU GCC Compiler)---------------</b><br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\cmd_processor.cpp -o .libobjs\cmd_processor.o<br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\conversion.cpp -o .libobjs\conversion.o<br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\data_base.cpp -o .libobjs\data_base.o<br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp -o .libobjs\faxfunctions.o<br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\marker_parser.cpp -o .libobjs\marker_parser.o<br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.cpp -o .libobjs\mysql.o<br />
+mingw32-g++.exe -Wall -fexceptions  -std=c++0x -Wall -g    -I..\..\..\..\..\..\boost_1_56_0 -I..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include  -c C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\sqlkeywords.cpp -o .libobjs\sqlkeywords.o<br />
+C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\conversion.cpp: In function 'std::string scientificFormat(float, size_t)':<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\conversion.cpp:452:12: warning: unused variable 'exponentStart' [-Wunused-variable]</font><br />
+In file included from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\cmd_processor.h:28:0,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\cmd_processor.cpp:19:<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:23:13: warning: 'h2fax::DEFAULT_ENGINE' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:24:13: warning: 'h2fax::DEFAULT_USERNAME' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:25:13: warning: 'h2fax::DEFAULT_PASSWORD' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:26:13: warning: 'h2fax::DEFAULT_DATABASE' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:27:13: warning: 'h2fax::DEFAULT_HOST' defined but not used [-Wunused-variable]</font><br />
+C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\conversion.cpp: In function 'bool isNum(std::string&amp;)':<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\conversion.cpp:550:10: warning: variable 'c' set but not used [-Wunused-but-set-variable]</font><br />
+C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\data_base.cpp: In member function 'void data_base::CreateNewFile(const char*)':<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\data_base.cpp:484:20: warning: comparison with string literal results in unspecified behaviour [-Waddress]</font><br />
+In file included from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\cmd_processor.h:28:0,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\marker_parser.h:24,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\marker_parser.cpp:1:<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:23:13: warning: 'h2fax::DEFAULT_ENGINE' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:24:13: warning: 'h2fax::DEFAULT_USERNAME' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:25:13: warning: 'h2fax::DEFAULT_PASSWORD' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:26:13: warning: 'h2fax::DEFAULT_DATABASE' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:27:13: warning: 'h2fax::DEFAULT_HOST' defined but not used [-Wunused-variable]</font><br />
+In file included from ..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/connection.h:34:0,<br />
+                 from ..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/driver.h:30,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.h:23,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.cpp:18:<br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/warning.h:40:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+In file included from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.h:24:0,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.cpp:18:<br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:48:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:52:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+In file included from ..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/connection.h:34:0,<br />
+                 from ..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/driver.h:30,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.h:23,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.h:4,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp:2:<br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/warning.h:40:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+In file included from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.h:24:0,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.h:4,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp:2:<br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:48:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:52:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:53:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:58:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:53:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+<font color="#0000ff">..\Engine_Eureka\Dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include/cppconn/exception.h:58:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]</font><br />
+C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.cpp: In member function 'size_t MySQL::rowCount()':<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\mysql.cpp:149:1: warning: control reaches end of non-void function [-Wreturn-type]</font><br />
+C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp: In member function 'void h2fax::faxheader::extractTime()':<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp:123:108: warning: suggest parentheses around '&amp;&amp;' within '||' [-Wparentheses]</font><br />
+In file included from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\cmd_processor.h:28:0,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\marker_parser.h:24,<br />
+                 from C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp:1:<br />
+C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h: At global scope:<br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:23:13: warning: 'h2fax::DEFAULT_ENGINE' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:24:13: warning: 'h2fax::DEFAULT_USERNAME' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:25:13: warning: 'h2fax::DEFAULT_PASSWORD' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:26:13: warning: 'h2fax::DEFAULT_DATABASE' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\default.h:27:13: warning: 'h2fax::DEFAULT_HOST' defined but not used [-Wunused-variable]</font><br />
+<font color="#0000ff">C:\Users\Kiseitai2\Documents\DevCB\html2faxcover\faxfunctions.cpp:162:13: warning: 'void h2fax::print_h2fax_info()' defined but not used [-Wunused-function]</font><br />
+ar.exe -r -s bin\Debug\libhtml2faxcover.a .libobjs\cmd_processor.o .libobjs\conversion.o .libobjs\data_base.o .libobjs\faxfunctions.o .libobjs\marker_parser.o .libobjs\mysql.o .libobjs\sqlkeywords.o<br />
+Output size is 965.91 KB<br />
+<font color="#0000ff">Process terminated with status 0 (0 minutes, 7 seconds)</font><br />
+<font color="#0000ff">0 errors, 31 warnings (0 minutes, 7 seconds)</font><br />
 </tt>
 </body>
 </html>

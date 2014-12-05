@@ -15,18 +15,16 @@
     You should have received a copy of the GNU Lesser General Public License
     along with This program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef TYPEDEFS_H_INCLUDED
-#define TYPEDEFS_H_INCLUDED
+#ifndef VERSION_H_INCLUDED
+#define VERSION_H_INCLUDED
 
 namespace h2fax
 {
-typedef void* void_ptr;
-typedef unsigned char byte;
-typedef const char* cstr;
-typedef unsigned int uint;
-typedef unsigned short word;
-typedef const float cfloat;
+//Lib info
+static cstr PROG_NAME = "html2faxcover\0";
+static cfloat PROG_VERSION = 1.1;
+static const char PROG_RELEASE = 's';
+static void print_h2fax_info();
 }
 
-
-#endif // TYPEDEFS_H_INCLUDED
+#endif // VERSION_H_INCLUDED

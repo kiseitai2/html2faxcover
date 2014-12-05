@@ -21,8 +21,9 @@
 
 
 h2fax::cstr SWITCHES = "c:C:d:E:f:H:l:L:M:n:N:p:P:r:s:t:u:U:v:V:x:X:\0";
+const char* na = "N/A\0";
 
-h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char switches[])
+h2fax::faxcover_args h2fax::getFaxcoverParameters(int argc, char* argv[], const char switches[])
 {
     char o = 0;
     faxcover_args args;
@@ -31,9 +32,9 @@ h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char swi
 
     if(argc == 1)
     {
-	std::cerr << "Error: The program was invoked with no arguments!"
-		<< std::endl;
-	args.argNum = 1;
+        std::cerr << "Error: The program was invoked with no arguments!"
+                  << std::endl;
+        args.argNum = 1;
         return args;
     }
 
@@ -42,80 +43,146 @@ h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char swi
         switch(o)
         {
         case 'c':
-            args.comments = optarg;
+            if(optarg)
+                args.comments = optarg;
+            else
+                args.comments = na;
             break;
         case 'C':
-            args.template_path = optarg;
+            if(optarg)
+                args.template_path = optarg;
+            else
+                args.template_path = na;
             break;
         case 'l':
-            args.to_location = optarg;
+            if(optarg)
+                args.to_location = optarg;
+            else
+                args.to_location = na;
             break;
         case 'L':
-            args.from_location = optarg;
+            if(optarg)
+                args.from_location = optarg;
+            else
+                args.from_location = na;
             break;
         case 'M':
-            args.email = optarg;
+            if(optarg)
+                args.email = optarg;
+            else
+                args.email = na;
             break;
         case 'n':
-            args.to_fax = optarg;
+            if(optarg)
+                args.to_fax = optarg;
+            else
+                args.to_fax = na;
             break;
         case 'N':
-            args.from_fax = optarg;
+            if(optarg)
+                args.from_fax = optarg;
+            else
+                args.from_fax = na;
             break;
         case 'p':
-            args.pageCount = optarg;
+            if(optarg)
+                args.pageCount = optarg;
+            else
+                args.pageCount = na;
             break;
         case 'r':
-            args.regarding = optarg;
+            if(optarg)
+                args.regarding = optarg;
+            else
+                args.regarding = na;
             break;
         case 'f':
-            args.from = optarg;
+            if(optarg)
+                args.from = optarg;
+            else
+                args.from = na;
             break;
         case 't':
-            args.to = optarg;
+            if(optarg)
+                args.to = optarg;
+            else
+                args.to = na;
             break;
         case 'v':
-            args.to_voice = optarg;
+            if(optarg)
+                args.to_voice = optarg;
+            else
+                args.to_voice = na;
             break;
         case 'V':
-            args.from_voice = optarg;
+            if(optarg)
+                args.from_voice = optarg;
+            else
+                args.from_voice = na;
             break;
         case 'x':
-            args.to_company = optarg;
+            if(optarg)
+                args.to_company = optarg;
+            else
+                args.to_company = na;
             break;
         case 'X':
-            args.from_company = optarg;
+            if(optarg)
+                args.from_company = optarg;
+            else
+                args.from_company = na;
             break;
             /*Database information switches!*/
         case 'u':
-            args.username = optarg;
+            if(optarg)
+                args.username = optarg;
+            else
+                args.username = na;
             break;
         case 'U':
-            args.engine = optarg;
+            if(optarg)
+                args.engine = optarg;
+            else
+                args.engine = na;
             break;
         case 'P':
-            args.password = optarg;
+            if(optarg)
+                args.password = optarg;
+            else
+                args.password = na;
             break;
         case 'd':
-            args.database = optarg;
+            if(optarg)
+                args.database = optarg;
+            else
+                args.database = na;
             break;
         case 'H':
-            args.host = optarg;
+            if(optarg)
+                args.host = optarg;
+            else
+                args.host = na;
             break;
-        /*Execution mode flag*/
+            /*Execution mode flag*/
         case 'E':
-            args.execMode = optarg;
+            if(optarg)
+                args.execMode = optarg;
+            else
+                args.execMode = na;
             break;
-        /*Page size*/
+            /*Page size*/
         case 's':
-            args.pageSize = optarg;
+            if(optarg)
+                args.pageSize = optarg;
+            else
+                args.pageSize = na;
             break;
-        /*Default cases*/
+            /*Default cases*/
         case '?':
         default:
             std::cerr << "Invalid parameters! Read on faxcover usage! "
-                << "http://hylafax.sourceforge.net/man/faxcover.php"
-                << std::endl;
+                      << "http://hylafax.sourceforge.net/man/faxcover.php"
+                      << std::endl;
         }
     }
     args.argNum = 2;
@@ -172,7 +239,7 @@ h2fax::cstr h2fax::faxcover_args::operator[](cstr arg)
     case 0x1fd8b:
         return pageCount;
         break;
-    /*Database variables*/
+        /*Database variables*/
     case 0xfdfb:
         return host;
         break;
@@ -185,7 +252,7 @@ h2fax::cstr h2fax::faxcover_args::operator[](cstr arg)
     case 0x19247:
         return database;
         break;
-    /*Execution mode flag*/
+        /*Execution mode flag*/
     case 0x16e6d:
         return execMode;
         break;
@@ -194,7 +261,7 @@ h2fax::cstr h2fax::faxcover_args::operator[](cstr arg)
         break;
     default:
         std::cerr << "Wrong parameter! This instance of faxcover_args will not return a reference to an internal data member!"
-        << std::endl;
+                  << std::endl;
     }
 
     return NULL;
@@ -235,6 +302,7 @@ void h2fax::getRecvdFaxParameters(int argc, char* argv[], h2fax::faxrecvd_args& 
             args.appName = argv[i];
             break;
         case 1:
+            std::cerr << argv[i] << "Hi";
             args.tiff_file = argv[i];
             break;
         case 2:

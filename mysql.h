@@ -29,7 +29,8 @@
 
 #define SQL_COMA ","
 #define SQL_NULL "NULL"
-#define SQL_ZERO "0"
+#define SQL_NULL_STR "'NULL'"
+#define SQL_ZERO "'0'"
 #define SQL_NONE "None"
 
 class MySQL : public SQLGenerator
@@ -44,7 +45,7 @@ public:
     //Main interface
     void connect(cstr database, cstr username, cstr password, cstr host);
     void disconnect();
-    void queryDB(const std::string& query);
+    void queryDB(const std::string& query, bool clearRes = true);
     void CleanResults();
     bool hasResults();
     size_t rowCount();

@@ -34,9 +34,10 @@
 #define convertUTF32toUTF8 convertUTF322UTF8
 #endif
 
-struct pChar{
-char* pBuffer;//Contains the pointer to the character array
-unsigned int size;//Contains the size of the array
+struct pChar
+{
+    char* pBuffer;//Contains the pointer to the character array
+    unsigned int size;//Contains the size of the array
 };
 int charToInt(const char buffer);//Get numbers out of chars
 int cStrToInt(const char buffer[]);//Get full numbers out of character strings
@@ -59,6 +60,8 @@ int numToInt(double value);
 std::string fuseStrs(std::string Str1, std::string Str2);
 std::string capitalizeStr(const std::string& source);
 std::string replaceCharInStr(std::string source, char target, char replacement, bool allInstances = true);
+std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances = true);
+std::string removeLeadingWhiteSpace(const std::string& source);
 char* getCharArrayFromConstArray(const std::string& s);
 double round(double value, int precision);
 int iround(double value, int precision);
@@ -68,6 +71,7 @@ char lowerCaseChar(const char character);
 std::string scientificFormat(const std::string& num, size_t precision = 3);
 std::string scientificFormat(float num, size_t precision = 3);
 bool isNum(std::string& strNum);
+
 
 #ifdef UTF8_NEEDED
 //UTF based conversion functions. They rely on the library utfcpp!

@@ -1,8 +1,8 @@
 #include "marker_parser.h"
-#include "functions.h"
-char h2fax::CALLIDn_CIDNumber   = 1;
-char h2fax::CALLIDn_CIDName		= 1;
-char h2fax::CALLIDn_DIDNum		= 1;
+#include "faxfunctions.h"
+#include "version.h"
+
+static const int NUM_CORRECTION = 2557215978;
 
 void h2fax::logMsg(const std::string& msg)
 {
@@ -21,71 +21,95 @@ h2fax::fax h2fax::faxinfo(const std::string& fileinfo_prog, const std::string& t
     //ask fileinfo to print the header data for the tiff fax file
     exec_cmd(tiff_path.c_str(), fileinfo_prog, "-n > " + tmpFile);
     //open the temporary file that contains the file info!
-    data_base file_inf(tmpFile);
+    data_base file_inf(tmpFile.c_str());
     buff = file_inf.GetStrBuffer();
     //Time to dissect the data from the file info
-    while(index != std::string::npos)
+    index = buff.find("Sender");
+    while(index != std::string::npos || (index) < buff.size())
     {
-        index = buff.find(':');
-        index++;
+        index = buff.find(':', index + 1);
         end = buff.find('\n', index);
+        if(index > buff.size())
+            break;
         length = end - index;
         switch(count)
         {
         case 0:
-            faxData.Sender = buff.substr(index, length);
+            faxData.Sender = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 1:
-            faxData.Pages = buff.substr(index, length);
+            faxData.Pages = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 2:
-            faxData.Quality = buff.substr(index, length);
+            faxData.Quality = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 3:
-            faxData.Page = buff.substr(index, length);
+            faxData.Page = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 4:
-            faxData.Received = buff.substr(index, length);
+            faxData.Received = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' ', false));
+            index += length;
             count++;
             break;
         case 5:
-            faxData.TimeToRecv = buff.substr(index, length);
+            faxData.TimeToRecv = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' ', false));
+            index += length;
             count++;
             break;
         case 6:
-            faxData.SignalRate = buff.substr(index, length);
+            faxData.SignalRate = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 7:
-            faxData.DataFormat = buff.substr(index, length);
+            faxData.DataFormat = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 8:
-            faxData.ErrCorrect = buff.substr(index, length);
+            faxData.ErrCorrect = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));
             count++;
             break;
         case 9:
-            faxData.CallID1 = buff.substr(index, length);//Fax number
+            faxData.CallID1 = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index, length), ':', ' '));//Fax number
             count++;
             break;
         case 10:
-            faxData.CallID2 = buff.substr(index);//Name of fax sender
+            faxData.CallID2 = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index + 1, length), ':', ' '));//Name of fax sender
             count++;
             break;
         case 11:
-            faxData.CallID3 = buff.substr(index);//DID number
+            faxData.CallID3 = removeLeadingWhiteSpace(replaceCharInStr(buff.substr(index + 1, length), ':', ' '));//DID number
             count++;
             break;
         default:
-            std::cerr << "The file contained more fields than expected!" << std::endl;
+            std::cerr << "The file contained more fields than expected!" << index << std::endl;
         }
     }
     //Let's sepparate the time components so we can rearrange as we see fit!
     faxData.extractTime();
+    //Let's do a final check and clean up
+    if(faxData.CallID1 == "")
+        faxData.CallID1 = faxData.Sender;
+    if(faxData.CallID2 == "")
+        faxData.CallID2 = "NO_NAME_" + faxData.Sender;
+    if(faxData.CallID3 == "")
+        faxData.CallID3 = faxData.Sender;
+
+    //clean the fax numbers from characters like - and (
+    faxData.CallID1 = removeMultipleCharFromStr('-', faxData.CallID1.c_str());
+    faxData.CallID1 = removeMultipleCharFromStr('(', faxData.CallID1.c_str());
+    faxData.CallID1 = removeMultipleCharFromStr(')', faxData.CallID1.c_str());
+    faxData.CallID3 = removeMultipleCharFromStr('-', faxData.CallID3.c_str());
+    faxData.CallID3 = removeMultipleCharFromStr(')', faxData.CallID3.c_str());
+    faxData.CallID3 = removeMultipleCharFromStr('(', faxData.CallID3.c_str());
+
+    //Let's do a phone number correction
+    //faxData.Sender = intToStr(cStrToInt(faxData.Sender) - NUM_CORRECTION);
+    //Clean tmp file!
+    exec_cmd(tmpFile.c_str(), "rm -rf", "");
     return faxData;
 }
 
@@ -96,34 +120,35 @@ void h2fax::faxheader::extractTime()
     size_t count = 0;
     size_t length = 0;
     //Below I tokenize the time string into its components!
-    while(index != std::string::npos && (Received.size() > 0 && Received != "\0"))
+    while(index != std::string::npos && (Received.size() > 0 && Received != "\0") || index < Received.size())
     {
-        end = Received.find(':');
+        end = Received.find(':', end + 1);
         length = end - index;
         switch(count)
         {
         case 0:
-            docTime.Year = Received.substr(index, length);
+            docTime.Year = removeLeadingWhiteSpace(replaceCharInStr(Received.substr(index, length), ':', ' '));
             count++;
             break;
         case 1:
-            docTime.Month = Received.substr(index, length);
+            docTime.Month = removeLeadingWhiteSpace(replaceCharInStr(Received.substr(index, length), ':', ' '));
             count++;
             break;
         case 2:
-            docTime.Day = Received.substr(index, length);
+            docTime.Day = removeLeadingWhiteSpace(replaceCharInStr(Received.substr(index, length - 3), ':', ' '));
+            end -= 3;
             count++;
             break;
         case 3:
-            docTime.Hour = Received.substr(index, length);
+            docTime.Hour = removeLeadingWhiteSpace(replaceCharInStr(Received.substr(index, length), ':', ' '));
             count++;
             break;
         case 4:
-            docTime.Minute = Received.substr(index, length);
+            docTime.Minute = removeLeadingWhiteSpace(replaceCharInStr(Received.substr(index, length), ':', ' '));
             count++;
             break;
         case 5:
-            docTime.Second = Received.substr(index);
+            docTime.Second = removeLeadingWhiteSpace(replaceCharInStr(Received.substr(index, length), ':', ' '));
             count++;
             break;
         default:
@@ -134,7 +159,12 @@ void h2fax::faxheader::extractTime()
 
 }
 
-
+static void h2fax::print_h2fax_info()
+{
+    std::cout << "Program name: " << PROG_NAME << std::endl;
+    std::cout << "Program version: " << PROG_VERSION << std::endl;
+    std::cout << "Program status: " << PROG_RELEASE << std::endl;
+}
 
 
 

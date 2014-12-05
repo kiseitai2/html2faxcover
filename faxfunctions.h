@@ -4,50 +4,40 @@
 #include "mysql.h"
 namespace h2fax
 {
-    //Structs
-    typedef struct time_info
-    {
-        std::string Year;
-        std::string Month;
-        std::string Day;
-        std::string Hour;
-        std::string Minute;
-        std::string Second;
-    }faxtime;
+//Structs
+typedef struct time_info
+{
+    std::string Year;
+    std::string Month;
+    std::string Day;
+    std::string Hour;
+    std::string Minute;
+    std::string Second;
+} faxtime;
 
-    typedef struct faxheader
-    {
-        std::string Sender;
-        std::string Pages;
-        std::string Quality;
-        std::string Page;
-        std::string Received;
-        std::string TimeToRecv;
-        std::string SignalRate;
-        std::string DataFormat;
-        std::string ErrCorrect;
-        std::string CallID1;
-        std::string CallID2;
-        std::string CallID3;
-        faxtime docTime;
-        void extractTime();
-    } fax;
+typedef struct faxheader
+{
+    std::string Sender;
+    std::string Pages;
+    std::string Quality;
+    std::string Page;
+    std::string Received;
+    std::string TimeToRecv;
+    std::string SignalRate;
+    std::string DataFormat;
+    std::string ErrCorrect;
+    std::string CallID1;
+    std::string CallID2;
+    std::string CallID3;
+    faxtime docTime;
+    void extractTime();
+} fax;
 
-    class FaxModem
-    {
-    public:
-        FaxModem(MySQL& db);
-    }
 
-    //Vars
-    static char CALLIDn_CIDNumber;
-    static char CALLIDn_CIDName;
-    static char CALLIDn_DIDNum;
-
-    //Functions
-    fax faxinfo(const std::string& fileinfo_prog, const std::string& tiff_path);
-    std::string strip_sipinfo(std::string dirtyStr);
-    void logMsg(const std::string& msg);
+//Functions
+fax faxinfo(const std::string& fileinfo_prog, const std::string& tiff_path);
+std::string strip_sipinfo(std::string dirtyStr);
+void logMsg(const std::string& msg);
 
 }
 
