@@ -15,6 +15,7 @@ typedef struct time_info
     std::string Second;
 } faxtime;
 
+<<<<<<< HEAD
 typedef struct faxheader
 {
     std::string Sender;
@@ -33,6 +34,8 @@ typedef struct faxheader
     void extractTime();
 } fax;
 
+=======
+>>>>>>> origin/v1.1_debug
 
 //Functions
 fax faxinfo(const std::string& fileinfo_prog, const std::string& tiff_path);

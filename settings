@@ -11,7 +11,11 @@ host = localhost;
 ignore_db_args = 0;
 Recvdfax settings below;
 tiff2pdf = tiff2pdf;
+<<<<<<< HEAD
 fax_path = /var/www/avantfax/faxes/recvd/;
+=======
+fax_path = ./faxes/recvd/;
+>>>>>>> origin/v1.1_debug
 tiffcp = tiffcp;
 fileinfo = faxinfo;
 sendmail = sendmail;
@@ -19,8 +23,11 @@ print_cmd = lp;
 printer = ;
 print_flag = p;
 fax_annotation = 0;
+<<<<<<< HEAD
 do_print = 0;
 do_mail = 0;
 Permission settings;
 usr = www-data;
 grp = www-data;
+=======
+>>>>>>> origin/v1.1_debug

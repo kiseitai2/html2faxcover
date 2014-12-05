@@ -139,3 +139,6 @@ void h2fax::exec_cmd(cstr filepath, const std::string& cmd, const std::string& o
 {
     convertToPS(filepath, cmd, options);
 }
+
+void h2fax::exec_cmd(cstr filepath, const std::string& cmd, const std::string& options)
+    {convertToPS(filepath, cmd, options);}

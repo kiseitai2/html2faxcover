@@ -62,6 +62,7 @@ typedef struct h2fax_args
     cstr execMode; //Variable that will hold the execution mode flag.
     size_t argNum;
 
+<<<<<<< HEAD
     h2fax_args()
     {
         appName = NULL;//file path + this application's name
@@ -103,6 +104,49 @@ typedef struct h2fax_args
     cstr operator[](cstr arg);
     uint hashFunction(cstr arg);
 } faxcover_args, faxrecvd_args;
+=======
+        h2fax_args()
+        {
+            appName = NULL;//file path + this application's name
+            from = NULL;//sending person
+            to = NULL;//destination person
+            from_company = NULL;//destination company
+            to_company = NULL;//sending company
+            to_location = NULL;//destination location
+            from_location = NULL;//sending location
+            regarding = NULL;//Re: topic of the facsimile
+            comments = NULL;//Comments in cover sheet
+            to_fax = NULL;//destination fax number
+            from_fax = NULL;//sending fax number
+            to_voice = NULL;//destination phone number
+            from_voice = NULL;//sending phone number
+            template_path = NULL;//path to fax cover sheet
+            email = NULL;//email of sender
+            pageCount = NULL;//Number of pages in the fax job
+            pageSize = NULL;//Size of the page
+            date = "";//Today's date
+            /*Faxrecvd parameters!*/
+            tiff_file = NULL;
+            modemdev = NULL;
+            commID = NULL;
+            errormsg = NULL;
+            CIDNumber = NULL;
+            CIDName = NULL;
+            DIDNum = NULL;
+            /*Database connection info*/
+            engine = NULL;
+            username = NULL;
+            password = NULL;
+            database = NULL;
+            host = NULL;
+            /*Execution mode flag*/
+            execMode = "0";
+	    argNum = 0;
+        }
+        cstr operator[](cstr arg);
+        uint hashFunction(cstr arg);
+    } faxcover_args, faxrecvd_args;
+>>>>>>> origin/v1.1_debug
 
 
 /*Because AvantFax can send us an argument string with empty options when options are expected (-u -P), I made this

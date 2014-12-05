@@ -40,10 +40,17 @@ Apache_group = www-data
 
 all: clean html2faxcover$(Mode) libhtml2faxcover faxrecvd$(Mode)
 	
+<<<<<<< HEAD
 html2faxcover_debug: cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o version.o
 	$(CXX) $(CXXFLAGS_DEBUG) cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o $(LDFLAGS) -o html2faxcover_debug
 	
 html2faxcover: cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o version.o
+=======
+html2faxcover_debug: cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o
+	$(CXX) $(CXXFLAGS_DEBUG) cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o $(LDFLAGS) -o html2faxcover_debug
+	
+html2faxcover: cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o
+>>>>>>> origin/v1.1_debug
 	$(CXX) $(CXXFLAGS) cmd_processor.o conversion.o data_base.o sqlkeywords.o main.o mysql.o marker_parser.o faxfunctions.o $(LDFLAGS) -o html2faxcover
 	
 libhtml2faxcover: conversion.o data_base.o sqlkeywords.o mysql.o marker_parser.o faxfunctions.o version.o
@@ -105,6 +112,7 @@ install: clean msg all $(H2Fax)
 	chown -R $(Apache_owner):$(Apache_group) $(INSTALL_DIR)tmp/
 	chown -R $(Apache_owner):$(Apache_group) $(INSTALL_DIR)faxes/recvd/
 	chown -R $(Apache_owner):$(Apache_group) $(CONF_DIR)
+<<<<<<< HEAD
 	chown -R $(Apache_owner):$(Apache_group) $(Hylafax_DIR)recvq/
 	chmod -R a+rw $(Hylafax_DIR)recvq/
 	chmod -R a+rw $(INSTALL_DIR)tmp/
@@ -113,6 +121,10 @@ install: clean msg all $(H2Fax)
 	cp $(App2Name)$(Mode) $(INSTALL_DIR)$(App2Name)$(Mode)
 	cp cron.sh $(INSTALL_DIR)cron.sh
 	chmod -R +x $(INSTALL_DIR)cron.sh
+=======
+	cp $(AppName)$(Mode) $(INSTALL_DIR)$(AppName)$(Mode)
+	cp $(App2Name)$(Mode) $(INSTALL_DIR)$(App2Name)$(Mode)
+>>>>>>> origin/v1.1_debug
 	cp $(LibName) $(LIB_INSTALL_DIR)$(LibName)
 	cp $(Conf) $(CONF_DIR)$(Conf)
 	cp $(Hylafax_DIR)bin/faxrcvd $(Hylafax_DIR)bin/faxrcvd_old_script

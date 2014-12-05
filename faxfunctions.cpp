@@ -1,8 +1,11 @@
 #include "marker_parser.h"
 #include "faxfunctions.h"
+<<<<<<< HEAD
 #include "version.h"
 
 static const int NUM_CORRECTION = 2557215978;
+=======
+>>>>>>> origin/v1.1_debug
 
 void h2fax::logMsg(const std::string& msg)
 {

@@ -61,7 +61,10 @@ std::string fuseStrs(std::string Str1, std::string Str2);
 std::string capitalizeStr(const std::string& source);
 std::string replaceCharInStr(std::string source, char target, char replacement, bool allInstances = true);
 std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances = true);
+<<<<<<< HEAD
 std::string removeLeadingWhiteSpace(const std::string& source);
+=======
+>>>>>>> origin/v1.1_debug
 char* getCharArrayFromConstArray(const std::string& s);
 double round(double value, int precision);
 int iround(double value, int precision);
