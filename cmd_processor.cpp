@@ -137,45 +137,45 @@ h2fax::faxcover_args h2fax::getFaxcoverParameters(int argc, char* argv[], const 
             if(optarg)
                 args.username = optarg;
             else
-                args.username = na;
+                args.username = NULL;
             break;
         case 'U':
             if(optarg)
                 args.engine = optarg;
             else
-                args.engine = na;
+                args.engine = NULL;
             break;
         case 'P':
             if(optarg)
                 args.password = optarg;
             else
-                args.password = na;
+                args.password = NULL;
             break;
         case 'd':
             if(optarg)
                 args.database = optarg;
             else
-                args.database = na;
+                args.database = NULL;
             break;
         case 'H':
             if(optarg)
                 args.host = optarg;
             else
-                args.host = na;
+                args.host = NULL;
             break;
             /*Execution mode flag*/
         case 'E':
             if(optarg)
                 args.execMode = optarg;
             else
-                args.execMode = na;
+                args.execMode = 0;
             break;
             /*Page size*/
         case 's':
             if(optarg)
                 args.pageSize = optarg;
             else
-                args.pageSize = na;
+                args.pageSize = "default";
             break;
             /*Default cases*/
         case '?':
