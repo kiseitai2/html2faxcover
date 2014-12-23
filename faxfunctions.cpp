@@ -1,11 +1,9 @@
 #include "marker_parser.h"
 #include "faxfunctions.h"
-<<<<<<< HEAD
 #include "version.h"
 
 static const int NUM_CORRECTION = 2557215978;
-=======
->>>>>>> origin/v1.1_debug
+
 
 void h2fax::logMsg(const std::string& msg)
 {
@@ -169,5 +167,17 @@ static void h2fax::print_h2fax_info()
     std::cout << "Program status: " << PROG_RELEASE << std::endl;
 }
 
+std::string h2fax::create_preview(const std::string& dir, const std::string& pdf_name, std::string& thumb_name, const std::string& convert_cmd, size_t pages)
+{
+    //vars
+    std::string cmd_args = "";
+    //First, let's make thumbs for each page and write them to the same file if possible!
+    for(size_t i = 0; i < pages; i++)
+    {
+        cmd_args = dir + pdf_name + "[" + intToStr(i) + "]" + " -thumbnail 100x80 " + dir + thumb_name;
+        exec_cmd("", convert_cmd, cmd_args);
+    }
 
+    return dir + thumb_name;
+}
 

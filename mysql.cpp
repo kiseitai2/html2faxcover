@@ -148,6 +148,16 @@ size_t MySQL::rowCount()
 
 }
 
+bool MySQL::validConnection()
+{
+    return conn->isValid(1000);
+}
+
+void MySQL::reconnect()
+{
+    conn->reconnect();
+}
+
 void MySQL::error_log(sql::SQLException& err)
 {
     std::cerr << "# ERR: SQLException in " << __FILE__;

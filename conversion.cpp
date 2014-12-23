@@ -511,47 +511,16 @@ std::string replaceCharInStr(std::string source, char target, char replacement, 
 
 std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances)
 {
-<<<<<<< HEAD
-    size_t pos = 0;
-    pos = source.find(target, pos);//Look for the first instance of target
-    if(pos > source.size())//If we are at EOF, return the unmodified copy
-        return source;//The reason I didn't use npos in the if statement is because npos gets optimized out in Unix systems :(
-    if(allInstances)//Replace all instances of target
-    {
-        while(pos != std::string::npos || pos < source.size())
-        {
-            if(pos > source.size())//Redundant check in the first run. A safety check for all subsequent runs!
-                break;
-            source.replace(source.find(target), target.size(), replacement);
-            pos = source.find(target, pos);
-        }
-    }
-    else //Replace the first instance of target
-    {
-        source.replace(source.find(target), target.size(), replacement);
-    }
-
-    return source;
-}
-
-std::string removeLeadingWhiteSpace(const std::string& source)
-{
-    size_t start = 0;
-    while(source[start] == ' ')
-    {
-        start++;
-    }
-
-    return source.substr(start);
-}
-
-=======
    size_t pos = 0;
+   pos = source.find(target, pos);//Look for the first instance of target
+   if(pos > source.size())//If we are at EOF, return the unmodified copy
+      return source;//The reason I didn't use npos in the if statement is because npos gets optimized out in Unix systems :(
    if(allInstances)//Replace all instances of target
    {
-      pos = source.find(target, pos);
-      while(pos != std::string::npos || pos > source.size())
+      while(pos != std::string::npos || pos < source.size())
       {
+         if(pos > source.size())//Redundant check in the first run. A safety check for all subsequent runs!
+            break;
          source.replace(source.find(target), target.size(), replacement);
 	 pos = source.find(target, pos);
       }
@@ -563,7 +532,18 @@ std::string removeLeadingWhiteSpace(const std::string& source)
 
    return source;
 }
->>>>>>> origin/v1.1_debug
+
+std::string removeLeadingWhiteSpace(const std::string& source)
+{
+   size_t start = 0;
+   while(source[start] == ' ')
+   {
+      start++;
+   }
+
+   return source.substr(start);
+}
+
 bool isNum(std::string& strNum)
 {
     std::string nums = "0123456789e-+.^";

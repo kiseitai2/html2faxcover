@@ -49,6 +49,8 @@ public:
     void CleanResults();
     bool hasResults();
     size_t rowCount();
+    bool validConnection();
+    void reconnect();
     /*Results getters*/
     void getResult(int& response, const std::string& col_name);
     void getResult(char& response, const std::string& col_name);
