@@ -26,7 +26,7 @@
 
 class data_base
 {
-private:
+    private:
     bool isBufferLoaded;
     bool writeMode;
     int lines;
@@ -43,7 +43,7 @@ private:
     void FileClear();
     void CleanFileContentsOfArtifacts();
     void TrimEndOfFile();
-public:
+    public:
     //methods
     data_base(const char location[]="", bool read = true);
     std::string GetStrBuffer() const;

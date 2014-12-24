@@ -3233,7 +3233,7 @@
 	"default.h"
 	"mysql.h"
 
-1416585537 source:c:\users\kiseitai2\documents\devcb\html2faxcover\conversion.cpp
+1409077032 source:c:\users\kiseitai2\documents\devcb\html2faxcover\conversion.cpp
 	"conversion.h"
 	<stdlib.h>
 	<stdio.h>
@@ -3243,12 +3243,10 @@
 	<math.h>
 	<unistd.h>
 
-1416413511 c:\users\kiseitai2\documents\devcb\html2faxcover\conversion.h
+1408905330 c:\users\kiseitai2\documents\devcb\html2faxcover\conversion.h
 	<string>
-	"config.h"
-	"utf8.h"
 
-1414838264 source:c:\users\kiseitai2\documents\devcb\html2faxcover\data_base.cpp
+1407117982 source:c:\users\kiseitai2\documents\devcb\html2faxcover\data_base.cpp
 	<fstream>
 	<string>
 	<string.h>
@@ -3256,41 +3254,38 @@
 	"conversion.h"
 	"data_base.h"
 
-1414838264 c:\users\kiseitai2\documents\devcb\html2faxcover\data_base.h
+1407117982 c:\users\kiseitai2\documents\devcb\html2faxcover\data_base.h
 	<fstream>
 	<string>
 	"conversion.h"
 	"data_base.h"
 	<iostream>
 
-1416240039 source:c:\users\kiseitai2\documents\devcb\html2faxcover\marker_parser.cpp
+1409276186 source:c:\users\kiseitai2\documents\devcb\html2faxcover\marker_parser.cpp
 	"marker_parser.h"
-	"conversion.h"
 	<cstdlib>
-	<cstdio>
-	<ctime>
 
-1416240046 c:\users\kiseitai2\documents\devcb\html2faxcover\marker_parser.h
+1409276186 c:\users\kiseitai2\documents\devcb\html2faxcover\marker_parser.h
 	<string>
 	"typedefs.h"
 	"data_base.h"
 	"cmd_processor.h"
 	"default.h"
 
-1417770746 c:\users\kiseitai2\documents\devcb\html2faxcover\typedefs.h
+1409233974 c:\users\kiseitai2\documents\devcb\html2faxcover\typedefs.h
 
-1416236276 c:\users\kiseitai2\documents\devcb\html2faxcover\cmd_processor.h
+1412758990 c:\users\kiseitai2\documents\devcb\html2faxcover\cmd_processor.h
 	<iostream>
 	<string>
 	"typedefs.h"
 	"default.h"
 
-1414838264 c:\users\kiseitai2\documents\devcb\html2faxcover\default.h
+1409253234 c:\users\kiseitai2\documents\devcb\html2faxcover\default.h
 
-1416512224 source:c:\users\kiseitai2\documents\devcb\html2faxcover\mysql.cpp
+1413248107 source:c:\users\kiseitai2\documents\devcb\html2faxcover\mysql.cpp
 	"mysql.h"
 
-1416510570 c:\users\kiseitai2\documents\devcb\html2faxcover\mysql.h
+1413248471 c:\users\kiseitai2\documents\devcb\html2faxcover\mysql.h
 	<iostream>
 	<string>
 	<cppconn/driver.h>
@@ -3299,13 +3294,13 @@
 	<cppconn/statement.h>
 	"sqlkeywords.h"
 
-1414838268 c:\users\kiseitai2\documents\devcb\html2faxcover\sqlkeywords.h
+1412758306 c:\users\kiseitai2\documents\devcb\html2faxcover\sqlkeywords.h
 	<string>
 	<map>
 	<iostream>
 	"typedefs.h"
 
-1416326783 source:c:\users\kiseitai2\documents\devcb\html2faxcover\cmd_processor.cpp
+1412800312 source:c:\users\kiseitai2\documents\devcb\html2faxcover\cmd_processor.cpp
 	<getopt.h>
 	"cmd_processor.h"
 	"conversion.h"
@@ -3327,41 +3322,41 @@
 	"html2faxcover.h"
 	"data_base.h"
 
-1416505196 source:c:\users\kiseitai2\documents\devcb\html2faxcover\sqlkeywords.cpp
+1413082086 source:c:\users\kiseitai2\documents\devcb\html2faxcover\sqlkeywords.cpp
 	"sqlkeywords.h"
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\driver.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\driver.h
 	"connection.h"
 	"build_config.h"
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\connection.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\connection.h
 	<map>
 	<boost/variant.hpp>
 	"build_config.h"
 	"warning.h"
 	"sqlstring.h"
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\build_config.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\build_config.h
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\warning.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\warning.h
 	<stdexcept>
 	<string>
 	<memory>
 	"sqlstring.h"
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\sqlstring.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\sqlstring.h
 	<string>
 	<algorithm>
 	"build_config.h"
 	<iostream>
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\exception.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\exception.h
 	"build_config.h"
 	<stdexcept>
 	<string>
 	<memory>
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\resultset.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\resultset.h
 	"config.h"
 	<list>
 	<map>
@@ -3369,29 +3364,19 @@
 	"sqlstring.h"
 	"resultset_metadata.h"
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\config.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\config.h
 	<stdint.h>
 	<inttypes.h>
 	<stdint.h>
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\resultset_metadata.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\resultset_metadata.h
 	"sqlstring.h"
 	"datatype.h"
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\datatype.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\datatype.h
 
-1411085508 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\statement.h
+1411089108 c:\users\kiseitai2\documents\devcb\engine_eureka\dependencies\mysql-connector-c++-noinstall-1.1.4-win32\include\cppconn\statement.h
 	"config.h"
 	"resultset.h"
 	<string>
-
-1414838264 c:\users\kiseitai2\documents\devcb\html2faxcover\config.h
-
-1416593768 source:c:\users\kiseitai2\documents\devcb\html2faxcover\faxfunctions.cpp
-	"marker_parser.h"
-	"faxfunctions.h"
-
-1416239835 c:\users\kiseitai2\documents\devcb\html2faxcover\faxfunctions.h
-	<string>
-	"mysql.h"
 

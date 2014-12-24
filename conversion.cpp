@@ -25,7 +25,6 @@
 #include <math.h>
 #include <unistd.h>
 
-
 //Prototypes
 void shiftLeadingExponentZeroes(char* source, size_t index);
 
@@ -68,22 +67,21 @@ int numToInt(double value)
     return int(value + extra);
 }
 
-const int searchCharIndex(char character, char buffer[])
+const int searchCharIndex(char character, char buffer[]){
+  /*This function will search for a character and tell me where it exists in the buffer.*/
+for(unsigned int i =0; buffer[i] != '\0'; i++)
 {
-    /*This function will search for a character and tell me where it exists in the buffer.*/
-    for(unsigned int i =0; buffer[i] != '\0'; i++)
+    if(character == buffer[i])
     {
-        if(character == buffer[i])
-        {
-            return i;
-        }
+        return i;
     }
-    return ERROR;
+}
+return ERROR;
 }
 
 const int searchCharIndex(const char character, std::string buffer, int start)
 {
-    /*This function will search for a character and tell me where it exists in the buffer.*/
+      /*This function will search for a character and tell me where it exists in the buffer.*/
     for(unsigned int i =start; i < buffer.length(); i++)
     {
         if(character == buffer[i])
@@ -94,17 +92,16 @@ const int searchCharIndex(const char character, std::string buffer, int start)
     return ERROR;
 }
 
-bool searchChar(const char character, std::string buffer)
+bool searchChar(const char character, std::string buffer){
+/*This function will search for a character and tell me if it exists.*/
+  for(unsigned int i =0; i < buffer.size() -1; i++)
 {
-    /*This function will search for a character and tell me if it exists.*/
-    for(unsigned int i =0; i < buffer.size() -1; i++)
+    if(character == buffer[i])
     {
-        if(character == buffer[i])
-        {
-            return true;
-        }
+        return true;
     }
-    return false;
+}
+return false;
 }
 
 int findString(const char target[], const char stringSource[], int pos)
@@ -196,7 +193,7 @@ std::string sliceStr(std::string input, int start, int end)
 {
     if(input == "")
     {
-        return "";
+      return "";
     }
     /*This function takes a string and returns a slice from the start position to the desired end position*/
     char answer[end - start + 1];
@@ -277,22 +274,22 @@ bool changeProgramWorkingDirectory(char* newPath)
 
 char capitalizeChar(const char character)
 {
-    /*This function takes a character and returns the upper case version. This
-     *conversion is based on the ASCII table. Because it uses the symmetry of the
-     *table, you can actually input other characters and receive not the upper case,
-     *but another character (example, [ -> ;). Warning: it shouldn't work with
-     *other character standards unless they share the same symmetry as the ASCII
-     *table.
-     **/
-    return character - ('a' - 'A');
+  /*This function takes a character and returns the upper case version. This
+   *conversion is based on the ASCII table. Because it uses the symmetry of the
+   *table, you can actually input other characters and receive not the upper case,
+   *but another character (example, [ -> ;). Warning: it shouldn't work with
+   *other character standards unless they share the same symmetry as the ASCII
+   *table.
+   **/
+  return character - ('a' - 'A');
 }
 
 char lowerCaseChar(const char character)
 {
-    /*This function takes a character and returns the lower case version. This
-     *conversion is based on the ASCII table.
-     **/
-    return character + ('a' - 'A');
+  /*This function takes a character and returns the lower case version. This
+   *conversion is based on the ASCII table.
+   **/
+  return character + ('a' - 'A');
 }
 
 std::string capitalizeStr(const std::string& source)
@@ -303,6 +300,31 @@ std::string capitalizeStr(const std::string& source)
         newStr = capitalizeChar(source[0]);
     }
     return newStr + source.substr(1, source.length());
+}
+
+std::string replaceStrInStr(const std::string& source, const std::string& target, const std::string& replacement, bool allInstances)
+{
+    std::string tmp = source;
+    size_t pos = 0;
+    if(allInstances)
+    {
+        while(pos != std::string::npos && (source.size() > 0 || pos < source.size() - 1))
+        {
+
+            pos = 0;
+            pos = findString(target.c_str(), tmp.c_str(), pos);
+	    if(pos == std::string::npos)
+		break;
+            tmp.replace(pos, target.size(), replacement);
+        }
+    }
+    else
+    {
+        pos = findString(target.c_str(), tmp.c_str(), pos);
+        if(pos != std::string::npos && (source.size() > 0 || pos < source.size() - 1))
+         tmp.replace(pos, target.size(), replacement);
+    }
+    return tmp;
 }
 
 char* getCharArrayFromConstArray(const std::string& s)
@@ -328,7 +350,7 @@ std::string scientificFormat(const std::string& num, size_t precision)
         return num;
     //Check wether index 0 is the negative sign or the actual start.
     if(num[start] == '-')
-        start++;
+            start++;
     //If the number is too small to begin with, return the unedited string!
     if(cStrToNum((num.c_str())) < 0 && dotLoc != std::string::npos)
         if(num.length() - 2 <= precision && num[0] != '0')
@@ -449,22 +471,22 @@ std::string scientificFormat(float num, size_t precision)
 {
     /* Overloaded version of my scientific notation function. This one uses the standard c library!*/
     size_t size = 10;
-    size_t exponentStart = 0;
+    //size_t exponentStart = 0;
     char buff[size];
     std::string formatPrecision = "%." + numToStr(precision) + "e";//Build the string format for the number
     /*if(numToStr(num).length() > precision)
     {
         //Create the scientific notation string*/
-    sprintf(buff, formatPrecision.c_str(), num);
-    /* //Grab the index of either - or + after e (in e+-00x)
-     if(searchCharIndex('-', buff, searchCharIndex('e', buff)) != ERROR)
-         exponentStart = searchCharIndex('-', buff, searchCharIndex('e', buff));
-     else if(searchCharIndex('+', buff, searchCharIndex('e', buff)) != ERROR)
-         exponentStart = searchCharIndex('+', buff, searchCharIndex('e', buff));
-     //Get rid of all leading zeroes
-     while(buff[exponentStart + 1] == '0')
-         shiftLeadingExponentZeroes(buff, exponentStart + 1);
-     return buff;
+        sprintf(buff, formatPrecision.c_str(), num);
+       /* //Grab the index of either - or + after e (in e+-00x)
+        if(searchCharIndex('-', buff, searchCharIndex('e', buff)) != ERROR)
+            exponentStart = searchCharIndex('-', buff, searchCharIndex('e', buff));
+        else if(searchCharIndex('+', buff, searchCharIndex('e', buff)) != ERROR)
+            exponentStart = searchCharIndex('+', buff, searchCharIndex('e', buff));
+        //Get rid of all leading zeroes
+        while(buff[exponentStart + 1] == '0')
+            shiftLeadingExponentZeroes(buff, exponentStart + 1);
+        return buff;
     }
     return numToStr(num);*/
     return buff;
@@ -508,116 +530,3 @@ std::string replaceCharInStr(std::string source, char target, char replacement, 
     }
     return source;
 }
-
-std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances)
-{
-   size_t pos = 0;
-   pos = source.find(target, pos);//Look for the first instance of target
-   if(pos > source.size())//If we are at EOF, return the unmodified copy
-      return source;//The reason I didn't use npos in the if statement is because npos gets optimized out in Unix systems :(
-   if(allInstances)//Replace all instances of target
-   {
-      while(pos != std::string::npos || pos < source.size())
-      {
-         if(pos > source.size())//Redundant check in the first run. A safety check for all subsequent runs!
-            break;
-         source.replace(source.find(target), target.size(), replacement);
-	 pos = source.find(target, pos);
-      }
-   }
-   else //Replace the first instance of target
-   {
-      source.replace(source.find(target), target.size(), replacement);
-   }
-
-   return source;
-}
-
-std::string removeLeadingWhiteSpace(const std::string& source)
-{
-   size_t start = 0;
-   while(source[start] == ' ')
-   {
-      start++;
-   }
-
-   return source.substr(start);
-}
-
-bool isNum(std::string& strNum)
-{
-    std::string nums = "0123456789e-+.^";
-    char c;
-    size_t correctCount = 0;
-    for(size_t i = 0; i < strNum.size(); i++)
-    {
-        c = strNum[i];
-        for(size_t j = 0; j < nums.size(); j++)
-        {
-            if(strNum[i] == nums[j])
-            {
-                correctCount++;
-                break;
-            }
-        }
-    }
-
-    return correctCount == strNum.size();
-}
-
-#ifdef UTF8_NEEDED
-bool checkUTF8String(const std::string& buffer)
-{
-    return utf8::is_valid(buffer.begin(), buffer.end());
-}
-
-std::string convertASCII2UTF8(const std::string& ascii)
-{
-    //create temporary buffer
-    std::string tmp;
-    //Ask utfcpp to look for invalid utf8 portions and replace them with utf8!
-    utf8::replace_invalid(ascii.begin(), ascii.end(), back_inserter(tmp));
-    //Return the newly formed string
-    return tmp;
-}
-
-std::string convertUTF82UTF16(const std::string& utf8)
-{
-    //create temporary buffer
-    std::string tmp;
-    //Ask utfcpp to convert the utf8 string into a utf16 string!
-    utf8::utf8to16(utf8.begin(), utf8.end(), back_inserter(tmp));
-    //Return the newly formed string
-    return tmp;
-}
-
-std::string convertUTF162UTF8(const std::string& utf16)
-{
-    //create temporary buffer
-    std::string tmp;
-    //Ask utfcpp to convert the utf16 string into a utf8 string!
-    utf8::utf16to8(utf16.begin(), utf16.end(), back_inserter(tmp));
-    //Return the newly formed string
-    return tmp;
-}
-
-std::string convertUTF82UTF32(const std::string& utf8)
-{
-    //create temporary buffer
-    std::string tmp;
-    //Ask utfcpp to convert the utf8 string into a utf16 string!
-    utf8::utf8to32(utf8.begin(), utf8.end(), back_inserter(tmp));
-    //Return the newly formed string
-    return tmp;
-}
-
-std::string convertUTF322UTF8(const std::string& utf32)
-{
-    //create temporary buffer
-    std::string tmp;
-    //Ask utfcpp to convert the utf16 string into a utf8 string!
-    utf8::utf32to8(utf32.begin(), utf32.end(), back_inserter(tmp));
-    //Return the newly formed string
-    return tmp;
-}
-#endif // UTF8_NEEDED

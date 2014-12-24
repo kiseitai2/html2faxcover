@@ -1,5 +1,4 @@
 #include "marker_parser.h"
-#include "conversion.h"
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
@@ -12,34 +11,34 @@ void h2fax::removeAvantFaxPrefix(cstr filepath, const std::string& prefix)
     char c;
     //Open and read file contents
     in = fopen(filepath, "r");
-    if (in == NULL) std::cerr << "Error opening file.1" << std::endl;
+    if (in == NULL) perror ("Error opening file");
     else
     {
+      c = fgetc(in);
+      while(c != EOF)
+      {
+        tmp += c;
         c = fgetc(in);
-        while(c != EOF)
-        {
-            tmp += c;
-            c = fgetc(in);
-        }
-        fclose(in);
+      }
+      fclose(in);       
     }
     //Modify contents
     tmp = replaceStrInStr(tmp, prefix, "");
     //Output the new contents to the same file
     out = fopen(filepath, "w");
-    if (out == NULL) std::cerr << "Error opening file.2" << std::endl;
+    if (out == NULL) perror ("Error opening file");
     else
     {
-        for(size_t i = 0; i < tmp.size(); i++)
+      for(size_t i = 0; i < tmp.size(); i++)
+      {
+        if(fputc(tmp[i], out) == EOF)
         {
-            if(fputc(tmp[i], out) == EOF)
-            {
-                std::cerr << "Error writing file!" << std::endl;
-                break;
-            }
-        }
-        fclose(out);
-    }
+          std::cout << "Error writing file!" << std::endl;
+          break;
+        } 
+      }  
+      fclose(out);   
+    }    
 }
 
 h2fax::cstr h2fax::copyFile(cstr source, cstr destination)
@@ -89,56 +88,49 @@ void h2fax::substituteMarkers(cstr filepath, faxcover_args& data)
     char c;
     //Open and read file contents
     in = fopen(filepath, "r");
-    if (in == NULL) std::cerr << "Error opening file.3" << std::endl;
+    if (in == NULL) perror ("Error opening file");
     else
     {
+      c = fgetc(in);
+      while(c != EOF)
+      {
+        tmp += c;
         c = fgetc(in);
-        while(c != EOF)
-        {
-            tmp += c;
-            c = fgetc(in);
-        }
-        fclose(in);
+      }
+      fclose(in);       
     }
     //Modify contents
     for(byte i = 0; i < MARKERSNUM; i++)
     {
         tmp = replaceStrInStr(tmp, MARKERS[i], data[MARKERS[i].c_str()], false);
     }
+    
     //Output the new contents to the same file
     out = fopen(filepath, "w");
-    if (out == NULL) std::cerr << "Error opening file.4" << std::endl;
+    if (out == NULL) perror ("Error opening file");
     else
     {
-        for(size_t i = 0; i < tmp.size(); i++)
+      for(size_t i = 0; i < tmp.size(); i++)
+      {
+        if(fputc(tmp[i], out) == EOF)
         {
-            if(fputc(tmp[i], out) == EOF)
-            {
-                std::cerr << "Error writing file!" << std::endl;
-                break;
-            }
-        }
-        fclose(out);
-    }
+          std::cout << "Error writing file!" << std::endl;
+          break;
+        } 
+      }  
+      fclose(out);   
+    }    
 }
 
 std::string h2fax::getDate()
 {
-    time_t     now = time(0);
-    struct tm*  tstruct;
-    std::string buf;
-    tstruct = localtime(&now);
-    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
-    // for more information about date/time format
-    buf = intToStr(tstruct->tm_mday) + "/" + intToStr(tstruct->tm_mon + 1) + "/" + intToStr(tstruct->tm_year + 1900);
-    //buf = asctime(tstruct);
-    return buf;
+  time_t     now = time(0);
+  struct tm*  tstruct;
+  std::string buf;
+  tstruct = localtime(&now);
+  // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+  // for more information about date/time format
+  buf = intToStr(tstruct->tm_mday) + "/" + intToStr(tstruct->tm_mon + 1) + "/" + intToStr(tstruct->tm_year + 1900);
+  //buf = asctime(tstruct);
+  return buf;
 }
-
-void h2fax::exec_cmd(cstr filepath, const std::string& cmd, const std::string& options)
-{
-    convertToPS(filepath, cmd, options);
-}
-
-void h2fax::exec_cmd(cstr filepath, const std::string& cmd, const std::string& options)
-    {convertToPS(filepath, cmd, options);}

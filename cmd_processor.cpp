@@ -1,40 +1,23 @@
-/*
-    Copyright (C) 2014 Luis M. Santos
-    Contact: luismigue1234@hotmail.com
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with This program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #include <getopt.h>
 #include "cmd_processor.h"
 #include "conversion.h"
 
 
-h2fax::cstr SWITCHES = "c:C:d:E:f:H:l:L:M:n:N:p:P:r:s:t:u:U:v:V:x:X:\0";
-const char* na = "N/A\0";
+h2fax::cstr SWITCHES = "c:C:d:E:f:H:l:L:M:n:N:p:P:r:s:t:u:U:v:V:x:X:";
 
-h2fax::faxcover_args h2fax::getFaxcoverParameters(int argc, char* argv[], const char switches[])
+h2fax::faxcover_args h2fax::getParameters(int argc, char* argv[], const char switches[])
 {
     char o = 0;
     faxcover_args args;
 
-    args.appName = argv[0];
-
     if(argc == 1)
     {
-        std::cerr << "Error: The program was invoked with no arguments!"
-                  << std::endl;
-        args.argNum = 1;
+        args.appName = argv[0];
+	std::cout << "Error: The program was invoked with no arguments!"
+		<< std::endl;
+	args.argNum = 1;
         return args;
     }
 
@@ -43,146 +26,80 @@ h2fax::faxcover_args h2fax::getFaxcoverParameters(int argc, char* argv[], const 
         switch(o)
         {
         case 'c':
-            if(optarg)
-                args.comments = optarg;
-            else
-                args.comments = na;
+            args.comments = optarg;
             break;
         case 'C':
-            if(optarg)
-                args.template_path = optarg;
-            else
-                args.template_path = na;
+            args.template_path = optarg;
             break;
         case 'l':
-            if(optarg)
-                args.to_location = optarg;
-            else
-                args.to_location = na;
+            args.to_location = optarg;
             break;
         case 'L':
-            if(optarg)
-                args.from_location = optarg;
-            else
-                args.from_location = na;
+            args.from_location = optarg;
             break;
         case 'M':
-            if(optarg)
-                args.email = optarg;
-            else
-                args.email = na;
+            args.email = optarg;
             break;
         case 'n':
-            if(optarg)
-                args.to_fax = optarg;
-            else
-                args.to_fax = na;
+            args.to_fax = optarg;
             break;
         case 'N':
-            if(optarg)
-                args.from_fax = optarg;
-            else
-                args.from_fax = na;
+            args.from_fax = optarg;
             break;
         case 'p':
-            if(optarg)
-                args.pageCount = optarg;
-            else
-                args.pageCount = na;
+            args.pageCount = optarg;
             break;
         case 'r':
-            if(optarg)
-                args.regarding = optarg;
-            else
-                args.regarding = na;
+            args.regarding = optarg;
             break;
         case 'f':
-            if(optarg)
-                args.from = optarg;
-            else
-                args.from = na;
+            args.from = optarg;
             break;
         case 't':
-            if(optarg)
-                args.to = optarg;
-            else
-                args.to = na;
+            args.to = optarg;
             break;
         case 'v':
-            if(optarg)
-                args.to_voice = optarg;
-            else
-                args.to_voice = na;
+            args.to_voice = optarg;
             break;
         case 'V':
-            if(optarg)
-                args.from_voice = optarg;
-            else
-                args.from_voice = na;
+            args.from_voice = optarg;
             break;
         case 'x':
-            if(optarg)
-                args.to_company = optarg;
-            else
-                args.to_company = na;
+            args.to_company = optarg;
             break;
         case 'X':
-            if(optarg)
-                args.from_company = optarg;
-            else
-                args.from_company = na;
+            args.from_company = optarg;
             break;
             /*Database information switches!*/
         case 'u':
-            if(optarg)
-                args.username = optarg;
-            else
-                args.username = NULL;
+            args.username = optarg;
             break;
         case 'U':
-            if(optarg)
-                args.engine = optarg;
-            else
-                args.engine = NULL;
+            args.engine = optarg;
             break;
         case 'P':
-            if(optarg)
-                args.password = optarg;
-            else
-                args.password = NULL;
+            args.password = optarg;
             break;
         case 'd':
-            if(optarg)
-                args.database = optarg;
-            else
-                args.database = NULL;
+            args.database = optarg;
             break;
         case 'H':
-            if(optarg)
-                args.host = optarg;
-            else
-                args.host = NULL;
+            args.host = optarg;
             break;
-            /*Execution mode flag*/
+        /*Execution mode flag*/
         case 'E':
-            if(optarg)
-                args.execMode = optarg;
-            else
-                args.execMode = 0;
+            args.execMode = optarg;
             break;
-            /*Page size*/
+        /*Page size*/
         case 's':
-            if(optarg)
-                args.pageSize = optarg;
-            else
-                args.pageSize = "default";
+            args.pageSize = optarg;
             break;
-            /*Default cases*/
+        /*Default cases*/
         case '?':
         default:
-            std::cerr << "Invalid parameters! Read on faxcover usage! "
-                      << "http://hylafax.sourceforge.net/man/faxcover.php"
-                      << std::endl;
+            std::cout << "Invalid parameters! Read on faxcover usage! "
+                << "http://hylafax.sourceforge.net/man/faxcover.php"
+                << std::endl;
         }
     }
     args.argNum = 2;
@@ -239,7 +156,7 @@ h2fax::cstr h2fax::faxcover_args::operator[](cstr arg)
     case 0x1fd8b:
         return pageCount;
         break;
-        /*Database variables*/
+    /*Database variables*/
     case 0xfdfb:
         return host;
         break;
@@ -252,7 +169,7 @@ h2fax::cstr h2fax::faxcover_args::operator[](cstr arg)
     case 0x19247:
         return database;
         break;
-        /*Execution mode flag*/
+    /*Execution mode flag*/
     case 0x16e6d:
         return execMode;
         break;
@@ -261,7 +178,7 @@ h2fax::cstr h2fax::faxcover_args::operator[](cstr arg)
         break;
     default:
         std::cerr << "Wrong parameter! This instance of faxcover_args will not return a reference to an internal data member!"
-                  << std::endl;
+        << std::endl;
     }
 
     return NULL;
@@ -290,32 +207,4 @@ h2fax::uint h2fax::faxcover_args::hashFunction(cstr arg)
 h2fax::cstr h2fax::getDefaultSwitches()
 {
     return SWITCHES;
-}
-
-void h2fax::getRecvdFaxParameters(int argc, char* argv[], h2fax::faxrecvd_args& args)
-{
-    for(int i = 0; i < argc; i++)
-    {
-        switch(i)
-        {
-        case 0:
-            args.appName = argv[i];
-            break;
-        case 1:
-            std::cerr << argv[i] << "Hi";
-            args.tiff_file = argv[i];
-            break;
-        case 2:
-            args.modemdev = argv[i];
-            break;
-        case 3:
-            args.commID = argv[i];
-            break;
-        case 4:
-            args.errormsg = argv[i];
-            break;
-        default:
-            std::cerr << "Error: More parameters were passed to the program than expected!" << std::endl;
-        }
-    }
 }

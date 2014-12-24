@@ -1,20 +1,3 @@
-/*
-    Copyright (C) 2014 Luis M. Santos
-    Contact: luismigue1234@hotmail.com
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with This program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #ifndef SQLKEYWORDS_H_INCLUDED
 #define SQLKEYWORDS_H_INCLUDED
 
@@ -79,8 +62,7 @@ possible. In other words, the compiler doesn't have to add assembly code every t
 The program doesn't have to allocate memory for each SELECT either! The users can also use this map in their custom
 generator implementations.
 */
-static std::map<word, std::string> Keywords
-{
+static std::map<word, std::string> Keywords{
     {CREATETABLE    , "CREATE TABLE \0"},
     {SELECT         , "SELECT \0"},
     {INSERT         , "INSERT \0"},
@@ -115,6 +97,6 @@ typedef struct SQLGenerator//SQL Query Generator. It's a nice helping structure!
 {
     static const std::string WILDCARD;
     std::string prepareStatement(std::string table = WILDCARD, std::string columns = WILDCARD, std::string criteria = WILDCARD, std::string pattern = WILDCARD, std::string pattern2 = WILDCARD, size_t statementType = SELECT);
-} SQLQuery;
+}SQLQuery;
 
 #endif // SQLKEYWORDS_H_INCLUDED
