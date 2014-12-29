@@ -28,7 +28,7 @@ MySQL::MySQL(cstr database, cstr username, cstr password, cstr host)
     statement = NULL;
     res = NULL;
     if(!database || !username || !password)
-        std::cout << "Warning: One or more pieces of information is missing. The program can't connect to the database without its name, "
+        std::cerr << "Warning: One or more pieces of information is missing. The program can't connect to the database without its name, "
             << "username, or password! Optionally, a host name should be specified for remote databases! Please, make sure this "
             << "information is present!" << std::endl;
     else
@@ -53,6 +53,12 @@ void MySQL::connect(cstr database, cstr username, cstr password, cstr host)
     }
 }
 
+void MySQL::reconnect(cstr database, cstr username, cstr password, cstr host)
+{
+    disconnect();
+    connect(database, username, password, host);
+}
+
 void MySQL::disconnect()
 {
     try
@@ -72,7 +78,7 @@ void MySQL::disconnect()
     }
 }
 
-void MySQL::queryDB(const std::string& query)
+void MySQL::queryDB(const std::string& query, bool clearRes)
 {
     try
     {
@@ -83,7 +89,8 @@ void MySQL::queryDB(const std::string& query)
         /*Let's set up an instance of statement!*/
         statement = conn->createStatement();
         //Reset results
-        CleanResults();
+        if(clearRes)
+           CleanResults();
         //Execute query and get results!
         res = statement->executeQuery(query);
     }
@@ -97,8 +104,9 @@ void MySQL::CleanResults()
 {
     try
     {
-        if(res)
+        if(res){
             delete res;
+         }
     }
     catch(sql::SQLException& e)
     {
@@ -106,16 +114,77 @@ void MySQL::CleanResults()
     }
 }
 
+bool MySQL::hasResults()
+{
+    try
+    {
+        if(!res)
+        {
+            std::cerr << "Error: the table does not exist in the current database!"
+            << " Check your syntax!" << std::endl;
+            return false;
+        }
+       else{
+            return res->rowsCount();
+         }
+    }
+    catch(sql::SQLException& e)
+    {
+        error_log(e);
+        return false;
+    }    
+}
+
+size_t MySQL::rowCount()
+{
+    try
+    {
+        if(res){
+            return res->rowsCount();
+         }
+	return 0;
+    }
+    catch(sql::SQLException& e)
+    {
+        error_log(e);
+    }
+    
+}
+
+bool MySQL::validConnection(const std::string& query)
+{
+    try
+    {
+       /*Let's check if a previous instance of statement exists*/
+        if(statement)
+            delete statement;//Clean it in preparation for the new query!
+        statement = NULL;
+        /*Let's set up an instance of statement!*/
+        statement = conn->createStatement();
+        //Execute query and get results!
+        sql::ResultSet *tmp_res = statement->executeQuery(query);
+        if(tmp_res)
+           delete tmp_res;
+        return true;
+    }
+    catch(sql::SQLException& e)
+    {
+        error_log(e);
+        return false;
+    }
+}
+
 void MySQL::error_log(sql::SQLException& err)
 {
-    std::cout << "# ERR: SQLException in " << __FILE__;
-    std::cout << "(" << __FUNCTION__ << ") on line "
+    std::cerr << "# ERR: SQLException in " << __FILE__;
+    std::cerr << "(" << __FUNCTION__ << ") on line "
     << __LINE__ << std::endl;
-    std::cout << "# ERR: " << err.what();
-    std::cout << " (MySQL error code: " << err.getErrorCode();
-    std::cout << ", SQLState: " << err.getSQLState() << " )" << std::endl;
+    std::cerr << "# ERR: " << err.what();
+    std::cerr << " (MySQL error code: " << err.getErrorCode();
+    std::cerr << ", SQLState: " << err.getSQLState() << " )" << std::endl;
     //Raise the status flag!
     status = true; //Things are bad!
+    res = NULL;
 }
 
 bool MySQL::getStatus() const
@@ -128,9 +197,9 @@ void MySQL::getResult(bool& response, const std::string& col_name)
     bool tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -148,9 +217,9 @@ void MySQL::getResult(int& response, const std::string& col_name)
     int tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -169,9 +238,9 @@ void MySQL::getResult(std::string& response, const std::string& col_name)
     std::string tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -190,9 +259,9 @@ void MySQL::getResult(char& response, const std::string& col_name)
     char tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -211,9 +280,9 @@ void MySQL::getResult(double& response, const std::string& col_name)
     double tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -232,9 +301,9 @@ void MySQL::getResult(bool& response, size_t col_index)
     bool tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -252,9 +321,9 @@ void MySQL::getResult(int& response, size_t col_index)
     int tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -273,9 +342,9 @@ void MySQL::getResult(std::string& response, size_t col_index)
     std::string tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -291,9 +360,9 @@ void MySQL::getResult(std::string& response, size_t col_index)
 
 void MySQL::getResult(char& response, size_t col_index)
 {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }
@@ -315,9 +384,9 @@ void MySQL::getResult(double& response, size_t col_index)
     double tmp;
     try
     {
-        if(!res->next())
+        if(!res || !res->next())
         {
-            std::cout << "Error: Either the resultset is empty or something is wrong with the query string!"
+            std::cerr << "Error: Either the resultset is empty or something is wrong with the query string!"
             << " No results were obtained from the previous query!" << std::endl;
             return;
         }

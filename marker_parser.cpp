@@ -1,4 +1,22 @@
+/*
+    Copyright (C) 2014 Luis M. Santos
+    Contact: luismigue1234@hotmail.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with This program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "marker_parser.h"
+#include "conversion.h"
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
@@ -11,7 +29,7 @@ void h2fax::removeAvantFaxPrefix(cstr filepath, const std::string& prefix)
     char c;
     //Open and read file contents
     in = fopen(filepath, "r");
-    if (in == NULL) perror ("Error opening file");
+    if (in == NULL) std::cerr << "Error opening file.1" << ": " << filepath << std::endl;
     else
     {
       c = fgetc(in);
@@ -26,14 +44,14 @@ void h2fax::removeAvantFaxPrefix(cstr filepath, const std::string& prefix)
     tmp = replaceStrInStr(tmp, prefix, "");
     //Output the new contents to the same file
     out = fopen(filepath, "w");
-    if (out == NULL) perror ("Error opening file");
+    if (out == NULL) std::cerr << "Error opening file.2" << ": " << filepath << std::endl;
     else
     {
       for(size_t i = 0; i < tmp.size(); i++)
       {
         if(fputc(tmp[i], out) == EOF)
         {
-          std::cout << "Error writing file!" << std::endl;
+          std::cerr << "Error writing file!" << std::endl;
           break;
         } 
       }  
@@ -88,7 +106,7 @@ void h2fax::substituteMarkers(cstr filepath, faxcover_args& data)
     char c;
     //Open and read file contents
     in = fopen(filepath, "r");
-    if (in == NULL) perror ("Error opening file");
+    if (in == NULL) std::cerr << "Error opening file.3" << ": " << filepath << std::endl;
     else
     {
       c = fgetc(in);
@@ -104,17 +122,16 @@ void h2fax::substituteMarkers(cstr filepath, faxcover_args& data)
     {
         tmp = replaceStrInStr(tmp, MARKERS[i], data[MARKERS[i].c_str()], false);
     }
-    
     //Output the new contents to the same file
     out = fopen(filepath, "w");
-    if (out == NULL) perror ("Error opening file");
+    if (out == NULL) std::cerr << "Error opening file.4" << ": " << filepath << std::endl;
     else
     {
       for(size_t i = 0; i < tmp.size(); i++)
       {
         if(fputc(tmp[i], out) == EOF)
         {
-          std::cout << "Error writing file!" << std::endl;
+          std::cerr << "Error writing file!" << std::endl;
           break;
         } 
       }  
@@ -134,3 +151,7 @@ std::string h2fax::getDate()
   //buf = asctime(tstruct);
   return buf;
 }
+
+void h2fax::exec_cmd(cstr filepath, const std::string& cmd, const std::string& options)
+    {convertToPS(filepath, cmd, options);}
+

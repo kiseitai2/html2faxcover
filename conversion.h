@@ -18,9 +18,26 @@
 #ifndef CONVERSION_H_INCLUDED
 #define CONVERSION_H_INCLUDED
 #include <string>
-struct pChar{
-char* pBuffer;//Contains the pointer to the character array
-unsigned int size;//Contains the size of the array
+#include "config.h"
+
+#ifdef UTF8_NEEDED
+#warning "Notice, if you want to access the utf8 conversion functions, you are required to add the utfcpp library/headers"
+#warning "to your project and define the macro UTF8_NEEDED in the included config.h header! You may find the library at"
+#warning "http://utfcpp.sourceforge.net/"
+
+#include "utf8.h"
+
+#define convertASCIItoUTF8 convertASCII2UTF8
+#define convertUTF8toUTF16 convertUTF82UTF16
+#define convertUTF16toUTF8 convertUTF162UTF8
+#define convertUTF8toUTF32 convertUTF82UTF32
+#define convertUTF32toUTF8 convertUTF322UTF8
+#endif
+
+struct pChar
+{
+    char* pBuffer;//Contains the pointer to the character array
+    unsigned int size;//Contains the size of the array
 };
 int charToInt(const char buffer);//Get numbers out of chars
 int cStrToInt(const char buffer[]);//Get full numbers out of character strings
@@ -43,8 +60,30 @@ int numToInt(double value);
 std::string fuseStrs(std::string Str1, std::string Str2);
 std::string capitalizeStr(const std::string& source);
 std::string replaceCharInStr(std::string source, char target, char replacement, bool allInstances = true);
-std::string replaceStrInStr(const std::string& source, const std::string& target, const std::string& replacement, bool allInstances = true);
+std::string replaceStrInStr(std::string source, const std::string& target, const std::string& replacement, bool allInstances = true);
+std::string removeLeadingWhiteSpace(const std::string& source);
 char* getCharArrayFromConstArray(const std::string& s);
+double round(double value, int precision);
+int iround(double value, int precision);
+bool changeProgramWorkingDirectory(char* newPath);
+char capitalizeChar(const char character);
+char lowerCaseChar(const char character);
+std::string scientificFormat(const std::string& num, size_t precision = 3);
+std::string scientificFormat(float num, size_t precision = 3);
+bool isNum(std::string& strNum);
+
+
+#ifdef UTF8_NEEDED
+//UTF based conversion functions. They rely on the library utfcpp!
+bool checkUTF8String(const std::string& buffer);
+std::string convertASCII2UTF8(const std::string& ascii);
+std::string convertUTF82UTF16(const std::string& utf8);
+std::string convertUTF162UTF8(const std::string& utf16);
+std::string convertUTF82UTF32(const std::string& utf8);
+std::string convertUTF322UTF8(const std::string& utf32);
+#endif
+
+//Templated function
 template <typename N> N compareValues(N numA, N numB)
 {
     if(numA > numB)
@@ -53,11 +92,17 @@ template <typename N> N compareValues(N numA, N numB)
     }
     return numB;
 }
-double round(double value, int precision);
-int iround(double value, int precision);
-bool changeProgramWorkingDirectory(char* newPath);
-char capitalizeChar(const char character);
-char lowerCaseChar(const char character);
-std::string scientificFormat(const std::string& num, size_t precision = 3);
-std::string scientificFormat(float num, size_t precision = 3);
+
+template <typename T> T reverseStackOrder(const T& in)
+{
+    /*This function will reverse the order of an stack. It assumes you are not feeding a pointer to an stack!
+    */
+    T out;
+    for(unsigned int i = 0; i < in.size(); i++)
+    {
+        out.push(in.top());
+    }
+    return out;
+}
 #endif // CONVERSION_H_INCLUDED
+
