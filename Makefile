@@ -113,6 +113,8 @@ install: clean msg all $(H2Fax)
 	cp $(App2Name)$(Mode) $(INSTALL_DIR)$(App2Name)$(Mode)
 	cp cron.sh $(INSTALL_DIR)cron.sh
 	chmod -R +x $(INSTALL_DIR)cron.sh
+	touch $(INSTALL_DIR)tmp/lock
+	touch $(INSTALL_DIR)tmp/lock2
 	cp $(LibName) $(LIB_INSTALL_DIR)$(LibName)
 	cp $(Conf) $(CONF_DIR)$(Conf)
 	cp $(Hylafax_DIR)bin/faxrcvd $(Hylafax_DIR)bin/faxrcvd_old_script

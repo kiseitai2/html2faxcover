@@ -35,6 +35,21 @@ int main(int argc, char* argv[])
     //Check if the internal API is the right version
     if(h2fax::PROG_VERSION < 1.1f)
         return EXIT_FAILURE;
+
+    //Let's make sure we have our tmp dir
+    //h2fax::exec_cmd(tmp.c_str(), "mkdir -p ", "");
+    //Let's redirect cerr
+    std::ofstream cerrLog("/tmp/cerrlog");
+    std::streambuf *cerr_copy = std::cerr.rdbuf();
+    if(cerrLog.is_open())
+       std::cerr.rdbuf(cerrLog.rdbuf());
+
+    //Let's redirect cout
+    std::ofstream coutLog("/tmp/coutlog");
+    std::streambuf *cout_copy = std::cout.rdbuf();
+    if(coutLog.is_open())
+       std::cout.rdbuf(coutLog.rdbuf());
+
     //Grab command line arguments in a nicely packaged structure!
     h2fax::faxcover_args args = h2fax::getFaxcoverParameters(argc, argv);
     h2fax::uint execMode;
@@ -47,15 +62,7 @@ int main(int argc, char* argv[])
     std::string html2ps_path = settings.GetStrFromData("html2ps");
     std::string tmp = settings.GetStrFromData("tmp");
     std::string hylafax = settings.GetStrFromData("hylafax");
-
-    //Let's make sure we have our tmp dir
-    //h2fax::exec_cmd(tmp.c_str(), "mkdir -p ", "");
-    //Let's redirect cerr
-    std::ofstream cerrLog("/tmp/cerrlog");
-    std::streambuf *cerr_copy = std::cerr.rdbuf();
-    if(cerrLog.is_open())
-       std::cerr.rdbuf(cerrLog.rdbuf());
-
+    std::string lock = settings.GetStrFromData("lock_file");
 
     //Let's only execute the rest of the program if we have all of the settings
     if(args.argNum > 1)
@@ -108,13 +115,13 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
 
     /*Let's lock the tmp directory*/
-    h2fax::exec_cmd(tmp.c_str(), "flock", "-c html2faxcover");
-    if(data_base((tmp + file).c_str()).GetStateOfInternalBuffer())
-    { 
-        //Let's clean our temporary location!
-        h2fax::removeDir(tmp.c_str());
-    }
-    
+    while(h2fax::LockFile(lock.c_str()) != 0){}
+    //Let's clean our temporary location!
+    h2fax::removeDir(tmp.c_str());
+
+    //Restore cout
+    if(coutLog.is_open())
+      std::cout.rdbuf(cout_copy);
 
     switch(execMode)
     {
@@ -187,6 +194,9 @@ int main(int argc, char* argv[])
             << "close! Thanks for using me? << Sounds a bit echi even for a machine! :3" << std::endl;
     }
     }
+
+    /*Let's unlock the tmp directory*/
+    h2fax::UnLockFile(lock.c_str());
 
     //Restore cerr
     if(cerrLog.is_open())

@@ -18,6 +18,7 @@
 #include "marker_parser.h"
 #include "faxfunctions.h"
 #include "version.h"
+#include <sys/file.h>
 
 static const int NUM_CORRECTION = 2557215978;
 
@@ -191,10 +192,27 @@ std::string h2fax::create_preview(const std::string& dir, const std::string& pdf
     //First, let's make thumbs for each page and write them to the same file if possible!
     for(size_t i = 0; i < pages; i++)
     {
-        cmd_args = dir + pdf_name + "[" + intToStr(i) + "]" + " -thumbnail 100x80 " + dir + thumb_name;
+        cmd_args = dir + pdf_name + "[" + intToStr(i) + "]" + " -thumbnail 120x100 " + dir + thumb_name;
         exec_cmd("", convert_cmd, cmd_args);
     }
 
     return dir + thumb_name;
+}
+
+std::string h2fax::create_cover_preview(const std::string& dir, const std::string& pdf_name, std::string& thumb_name, const std::string& convert_cmd)
+{
+    return create_preview(dir, pdf_name, thumb_name, convert_cmd, 1);
+}
+
+int h2fax::LockFile(cstr file)
+{
+   FILE* f = fopen(file, "r");
+   return flock(fileno(f), LOCK_EX);
+}
+
+int h2fax::UnLockFile(cstr file)
+{
+   FILE* f = fopen(file, "r");
+   return flock(fileno(f), LOCK_UN);
 }
 

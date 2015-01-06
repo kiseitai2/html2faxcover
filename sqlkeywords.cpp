@@ -102,7 +102,7 @@ std::string SQLGenerator::prepareStatement(std::string table, std::string column
     case INSERT:
     case INSERT | INTO:
     case INSERT | INTO | VALUES:
-        query = Keywords[INSERT] + Keywords[INTO] + table + "(" + columns + ")" + Keywords[VALUES] + criteria;
+        query = Keywords[INSERT] + Keywords[INTO] + table + "(" + columns + ")" + Keywords[VALUES] + "(" + criteria + ")";
         break;
     /*UPDATE table_name
     SET column1=value1,column2=value2,...

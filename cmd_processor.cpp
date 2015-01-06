@@ -32,8 +32,6 @@ h2fax::faxcover_args h2fax::getFaxcoverParameters(int argc, char* argv[], const 
 
     if(argc == 1)
     {
-        std::cerr << "Error: The program was invoked with no arguments!"
-                  << std::endl;
         args.argNum = 1;
         return args;
     }

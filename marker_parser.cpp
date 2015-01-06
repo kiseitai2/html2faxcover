@@ -84,7 +84,7 @@ h2fax::cstr h2fax::copyDir(cstr source, cstr destination)
 
 h2fax::cstr h2fax::removeDir(cstr target)
 {
-    std::string cmd = "rm -r ";
+    std::string cmd = "rm -rf ";
     cmd += target;
     if(std::system(cmd.c_str()))
         return target;

@@ -58,11 +58,12 @@ int main(int argc, char* argv[])
     std::string printer_cmd = settings.GetStrFromData("print_cmd");
     std::string printer_name = settings.GetStrFromData("printer");
     std::string printer_flag = settings.GetStrFromData("print_flag");
-    std::string tmp_path = settings.GetStrFromData("tmp");
+    std::string tmp_path = settings.GetStrFromData("tmp2");
     std::string user = settings.GetStrFromData("usr");
     std::string group = settings.GetStrFromData("grp");
     bool print = settings.GetIntFromData("do_print");
     bool mail = settings.GetIntFromData("do_mail");
+    std::string lock = settings.GetStrFromData("lock_file2");
     std::string recipient = "";
     bool enable_fax_annotation = settings.GetIntFromData("fax_annotation");
     size_t trials = settings.GetIntFromData("reconnection_attempts");
@@ -89,17 +90,17 @@ int main(int argc, char* argv[])
     
     /*Prog
     */
+    std::string modemdev = args.modemdev;
     std::string tiff_name = "fax.tiff";
     std::string pdf_name = "fax.pdf";
     std::string thumbnail = "thumb.gif";
+    /*Let's lock the tmp directory*/
+    while(h2fax::LockFile(lock.c_str()) != 0){} 
+    h2fax::exec_cmd("-p -v -m 777", "mkdir", tmp_path);
 
     h2fax::logMsg("Obtain Fax Info!");
     //Let's copy the file to a writable location so we do not have permission clashes.
     std::string tmp_destination = tmp_path + "tmp.tif";
-    /*Let's lock the tmp directory*/
-    h2fax::exec_cmd(tmp_path.c_str(), "flock", "-c faxrcvd"); 
-    /*Let's make sure the tmp location is empty.*/
-    h2fax::exec_cmd(tmp_destination.c_str(), "rm -rf", "");
     h2fax::copyFile(args.tiff_file, tmp_destination.c_str());
     //Let's use our copy for the following couple of transactions!
     fax_info = h2fax::faxinfo(fileinfo_prog, tmp_destination);
@@ -115,15 +116,13 @@ int main(int argc, char* argv[])
     std::string pdf_file = fax_dir + pdf_name;
     h2fax::exec_cmd((fax_file + " -o").c_str(), tiff2pdf_path, pdf_file);
 
-    //Let's make a thumbnail!
-    h2fax::logMsg("Creating thumbnail from PDF file...");
-    h2fax::create_preview(fax_dir, pdf_name, thumbnail, convert, cStrToInt(fax_info.Pages.c_str()));
+    h2fax::logMsg("Creating Fax preview...");
+    h2fax::create_cover_preview(fax_dir, pdf_name, thumbnail, convert);
 
     //Let's get the fax category id before we move on!
     h2fax::logMsg("Getting fax category id...");
     std::string faxcatid = "0";
     //Let's get the category id
-    checkConnection(db, args, trials);//Check the connection again!
     db.queryDB((db.prepareStatement("Modems", "faxcatid", std::string("device = ") +  "'" + args.modemdev + "'","","",SELECT|FROM|WHERE)));
     if(db.hasResults())
     {
@@ -133,7 +132,6 @@ int main(int argc, char* argv[])
     //Check fax number in addressbook!
     h2fax::logMsg("Checking caller ID...");
     std::string faxnumid = "0";
-    checkConnection(db, args, trials);//Check the connection again!
     db.queryDB(db.prepareStatement("AddressBookFAX", "abook_id", std::string("faxnumber = ") + "'" + fax_info.CallID1 + "'","","",SELECT | FROM | WHERE));
     if(db.hasResults())//Find out if the fax number is registered in the address book
     {
@@ -149,14 +147,13 @@ int main(int argc, char* argv[])
         db.queryDB(db.prepareStatement("AddressBook", "abook_id", std::string("company = ") + "'" + fax_info.CallID2 + "'","","",SELECT|FROM|WHERE));
         db.getResult(faxnumid);
         db.queryDB(db.prepareStatement("AddressBookFAX", std::string("abook_id,faxnumber,") + "faxcatid,printer",
-                                    faxnumid + SQL_COMA + "'" + fax_info.CallID1 + "'" + SQL_COMA + faxcatid + SQL_COMA + SQL_NULL_STR,""
-                                     ,"",INSERT|INTO));
+                                       faxnumid + SQL_COMA + "'" + fax_info.CallID1 + "'" + SQL_COMA + faxcatid + SQL_COMA + SQL_NULL_STR,""
+                                       ,"",INSERT|INTO));
     }
 
     //Let's enable DID routing!
     h2fax::logMsg("Enabling DID routing...");
     std::string didnum_id = "";
-    checkConnection(db, args, trials);//Check the connection again!
     db.queryDB(db.prepareStatement("DIDRoute", "didr_id", std::string("routecode = ") + "'" + fax_info.CallID3 + "'","","",SELECT | FROM | WHERE));
     if(db.hasResults())//Find out if the DID number is registered in the database
     {
@@ -166,8 +163,8 @@ int main(int argc, char* argv[])
     {
         //Create entry in table didroute
         db.queryDB(db.prepareStatement("DIDRoute", "routecode,alias,contact,printer,faxcatid",
-                                    fax_info.CallID3 + SQL_COMA + SQL_NULL + SQL_COMA + SQL_NULL + SQL_COMA
-                                     + SQL_NULL + SQL_COMA + SQL_NULL,"","",INSERT|INTO));
+                                       fax_info.CallID3 + SQL_COMA + SQL_NULL + SQL_COMA + SQL_NULL + SQL_COMA
+                                       + SQL_NULL + SQL_COMA + SQL_NULL,"","",INSERT|INTO));
     }
 
     //Add Fax to inbox!
@@ -176,11 +173,10 @@ int main(int argc, char* argv[])
     //Generate Date
     std::string date = fax_info.docTime.Year + "-" + fax_info.docTime.Month + "-" + fax_info.docTime.Day + " " + fax_info.docTime.Hour + ":" + fax_info.docTime.Minute + ":" + fax_info.docTime.Second;
     //Write fax entry to the database (table faxarchive)
-    checkConnection(db, args, trials);//Check the connection again!
-    db.queryDB(db.prepareStatement("FaxArchive", "faxpath,pages,didr_id,archstamp,faxnumid,origfaxnum,faxcatid,modemdev",
+    db.queryDB(db.prepareStatement("FaxArchive", "faxpath,pages,didr_id,archstamp,faxnumid,origfaxnum,modemdev",
                                    "'/faxes/recvd/" + fax_file_dir + "'" + SQL_COMA + fax_info.Pages + SQL_COMA + didnum_id + SQL_COMA +
                                    "'" + date + "'" + SQL_COMA + faxnumid
-                                   + SQL_COMA + "'" + fax_info.Sender + "'" + SQL_COMA + faxcatid + SQL_COMA + "'" + args.modemdev + "'","","",INSERT|INTO));
+                                   + SQL_COMA + "'" + fax_info.Sender + "'" + SQL_COMA + "'" + modemdev + "'","","",INSERT|INTO));
     db.queryDB(db.prepareStatement("FaxArchive", "fid", std::string("origfaxnum = ") + "'" + fax_info.Sender + "'","","",SELECT | FROM | WHERE));
     if(db.hasResults())//Find out if we successfully added the fax entry
     {
@@ -189,7 +185,7 @@ int main(int argc, char* argv[])
     }
     else//log an error
     {
-        h2fax::logMsg(std::string("Oops, the ship sunk! This is why we can't have nice things... The program was not able") +
+        h2fax::logMsg(std::string("Oops, the ship sunk! This is why we can't have nice things... The program was not  able") +
                       "to add the fax entry to the database! :(");
     }
 
@@ -203,27 +199,26 @@ int main(int argc, char* argv[])
     //Let's send an email!
     if(mail)
     {
-    h2fax::logMsg("Preparing to send e-mail!");
-    size_t rows = 0;
-    //Let's compile a list of destinations to which we want to send the email!
-    checkConnection(db, args, trials);//Check the connection again!
-    db.queryDB(db.prepareStatement("UserAccount", "email", std::string("modemdevs = ") + "'" + args.modemdev + "'","","",SELECT|FROM|WHERE));
-    rows = db.rowCount();
-    if(rows)
-    {
-        std::string tmp;
-        recipient += "\"";
-        for(size_t i = 0; i < rows; i++)
+        h2fax::logMsg("Preparing to send e-mail!");
+        size_t rows = 0;
+        //Let's compile a list of destinations to which we want to send the email!
+        db.queryDB(db.prepareStatement("UserAccount", "email", std::string("modemdevs = ") + "'" + args.modemdev + "'","","",SELECT|FROM|WHERE));
+        rows = db.rowCount();
+        if(rows)
         {
-     std::cerr << rows << tmp << std::endl;
-            db.getResult(tmp);
-            recipient += tmp;
-            recipient += ",";
+            std::string tmp;
+            recipient += "\"";
+            for(size_t i = 0; i < rows; i++)
+            {
+                std::cerr << rows << tmp << std::endl;
+                db.getResult(tmp);
+                recipient += tmp;
+                recipient += ",";
+            }
+            recipient += "\"";
         }
-        recipient += "\"";
-    }
-    //Send the fax to all users associated with the modem
-    h2fax::exec_cmd(std::string("\"/a " + fax_file + " /a " + pdf_file + "\"").c_str(), "sendmail", recipient + "\"Fax_From: " + fax_info.CallID2 + "\"");
+        //Send the fax to all users associated with the modem
+        h2fax::exec_cmd(std::string("\"/a " + fax_file + " /a " + pdf_file + "\"").c_str(), "sendmail", recipient + "\"Fax_From: " + fax_info.CallID2 + "\"");
     }
 
     //Print Support
@@ -247,6 +242,9 @@ int main(int argc, char* argv[])
     //Let's clean our tmp file!
     h2fax::exec_cmd(tmp_destination.c_str(), "rm -rf", "");
 
+    //Let's unlock the tmp directory
+    h2fax::UnLockFile(lock.c_str());
+
     //Restore cerr
     if(cerrLog.is_open())
         std::cerr.rdbuf(cerr_copy);
@@ -257,7 +255,6 @@ int main(int argc, char* argv[])
 
     return EXIT_SUCCESS;
 }
-
 bool checkConnection(MySQL& db, const h2fax::faxrecvd_args& args, size_t numTrials)
 {
     srand(time(NULL));
