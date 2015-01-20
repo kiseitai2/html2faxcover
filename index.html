@@ -28,13 +28,14 @@
       </header>
       <section>
         <p><b>Introduction:</b><br>
-    This project came about when I tried setting up a fax server at my aunt's business. Unfortunately, AvantFax's faxcover.php was having trouble creating a database object and connecting to the database. AvantFax connects to the MySQL database in order to obtain the name and e-mail of the sending user and putting it in the coversheet automatically. I decided that I could have a better control over the problem if I created a C++ program that would connect to this database directly. I decided to call the program html2faxcover, because I want this program to be a replacement for AvantFax's or any other fax server system's html to coversheet conversion utility. Currently, this program is not a completely standalone utility. <br> <br></p>
+    This project came about when I tried setting up a fax server at my aunt's business. Unfortunately, AvantFax's faxcover.php was having trouble creating a database object and connecting to the database. AvantFax connects to the MySQL database in order to obtain the name and e-mail of the sending user and putting it in the coversheet automatically. I decided that I could have a better control over the problem if I created a C++ program that would connect to this database directly. I decided to call the program html2faxcover, because I want this program to be a replacement for AvantFax's or any other fax server system's html to coversheet conversion utility. Currently, this program is not a completely standalone utility. <br> 
+    Because Avantfax provided a faxrcvd script that also required access to the database, I had to interpret and recreate this script in c++.<br><br></p>
 <b>Installation:</b><br>
  To install this utility program, download the source code. Open up the Makefile and
 review the first couple of lines. Make changes to these lines if you think they are 
 appropriate. Open up settings and make sure its information is accurate. Save both 
 files. If by any chance you changed the CONF_DIR variable in the Makefile, edit the 
-first path you'll see in main() in main.cpp from /etc/... to /the/path/in/conf_dir.
+first path you'll see in main() in main.cpp and main() in faxrecvd from /etc/... to /the/path/in/conf_dir.
 Such a change is not recommendable, but it is not an issue if you set permissions
 correctly.<br>
  Once these files are configured appropriately, run sudo make install in a terminal.
@@ -46,7 +47,7 @@ Read below about the usage parameters.
  Send a test fax using your html coversheet of choice and confirm that the system
 works as intended.<br><br>
 <b>Usage:</b><br>
- This program accepts all of the options sent by AvantFax and used by HylaFax's 
+ Html2faxcover accepts all of the options sent by AvantFax and used by HylaFax's 
 faxcover (see <a href="http://linux.die.net/man/1/faxcover">faxcover's man page</a>). However, since the program connects to your MySQL database of choice,
 I supplied a couple of extra command line options!<br>
  -u Allows you to specify the username for the database.<br>
@@ -65,13 +66,15 @@ I supplied a couple of extra command line options!<br>
 	everything. 1 = remove AvantFax's prefix on each field, convert the file to 
 	a Post Script file and call HylaFax's faxcover utility with the other command
     line options. 2 = the file is a ps coversheet that only needs the AvantFax 
-	prefixes removed and passed to HylaFax.<br><br>
+	prefixes removed and passed to HylaFax.<br>
+
+Faxrecvd accepts all of the command line options faxrcvd is supposed to accept without any extra options. The only exception is that it ignores the complex options. <br><br>
 
 <p><b>Requirements:</b><br>
    This program requires that html2ps or a similar utility is available in your system.<br><br>
    
 <b>Status:</b><br>
-  The program is stable in the fax server. The current version is 1.0!<br><br></p>
+  The program is stable in the fax server. The current version is 1.1!<br><br></p>
       </section>
     </div>
     <footer>
